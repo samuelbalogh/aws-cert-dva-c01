@@ -1,7 +1,5 @@
 # aws-cert-dva-c01
 
-AWS test notes
-
 ### AWS Cloudformation
 
 #### What is AWS CloudFormation? 
