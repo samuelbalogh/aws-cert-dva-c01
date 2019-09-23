@@ -446,11 +446,6 @@ aws lambda create-alias --name alias name --function-name function-name \ --func
 --routing-config AdditionalVersionWeights={"2"=0.02}
 ```
 
-### AWS Step Functions
-
-Executions that pass large payloads of data between states can be terminated. If the data you are passing between states might grow to over 32 KB, use Amazon Simple Storage Service (Amazon S3) to store the data, and pass the Amazon Resource Name (ARN) instead of the raw data. Alternatively, adjust your implementation so that you pass smaller payloads in your executions.
-
-
 #### Handle Lambda Service Exceptions
 
 AWS Lambda can occasionally experience transient service errors. In this case, invoking Lambda will result in a 500 error such as ServiceException, AWSLambdaException, or SdkClientException. As a best practice, proactively handle these exceptions in your state machine to Retry invoking your Lambda function, or to Catch the error.
@@ -476,6 +471,11 @@ AWS SAM templates are an extension of AWS CloudFormation templates. That is, any
 ##### AWS SAM Template Concepts
 
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
+
+### AWS Step Functions
+
+Executions that pass large payloads of data between states can be terminated. If the data you are passing between states might grow to over 32 KB, use Amazon Simple Storage Service (Amazon S3) to store the data, and pass the Amazon Resource Name (ARN) instead of the raw data. Alternatively, adjust your implementation so that you pass smaller payloads in your executions.
+
 
 ### AWS Secrets Manager
 
