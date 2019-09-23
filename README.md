@@ -56,6 +56,27 @@
     + [AWS Lambda](#aws-lambda)
       - [Deployment](#deployment)
       - [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
+      - [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
+      - [AWS SAM](#aws-sam)
+        * [AWS SAM Template Concepts](#aws-sam-template-concepts)
+    + [AWS Step Functions](#aws-step-functions)
+    + [AWS Secrets Manager](#aws-secrets-manager)
+    + [AWS Data Pipeline](#aws-data-pipeline)
+      - [What is a data node?](#what-is-a-data-node)
+      - [What is a pipeline?](#what-is-a-pipeline)
+      - [What is an activity?](#what-is-an-activity)
+    + [X-ray](#x-ray)
+    + [AWS Quicksight](#aws-quicksight)
+    + [AWS Batch](#aws-batch)
+      - [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
+    + [AWS SNS](#aws-sns)
+      - [Amazon SNS Message Filtering](#amazon-sns-message-filtering)
+    + [AWS CodePipeline](#aws-codepipeline)
+      - [What is AWS CodePipeline?](#what-is-aws-codepipeline)
+      - [What is a pipeline?](#what-is-a-pipeline-1)
+      - [How do I start a pipeline?](#how-do-i-start-a-pipeline)
+      - [How can I provision and manage my AWS resources through a release workflow process?](#how-can-i-provision-and-manage-my-aws-resources-through-a-release-workflow-process)
+      - [Integrations](#integrations)
 
 ### AWS Cloudformation
 
@@ -531,3 +552,30 @@ Using CloudWatch Events, you can monitor the progress of jobs, build AWS Batch c
 By default, an Amazon SNS topic subscriber receives every message published to the topic. To receive a subset of the messages, a subscriber must assign a filter policy to the topic subscription.
 
 A filter policy is a simple JSON object containing attributes that define which messages the subscriber receives. When you publish a message to a topic, Amazon SNS compares the message attributes to the attributes in the filter policy for each of the topic's subscriptions. If any of the attributes match, Amazon SNS sends the message to the subscriber. Otherwise, Amazon SNS skips the subscriber without sending the message. If a subscription doesn't have a filter policy, the subscription receives every message published to its topic. 
+
+
+### AWS CodePipeline
+
+
+#### What is AWS CodePipeline?
+
+AWS CodePipeline is a continuous delivery service that enables you to model, visualize, and automate the steps required to release your software. With AWS CodePipeline, you model the full release process for building your code, deploying to pre-production environments, testing your application and releasing it to production. AWS CodePipeline then builds, tests, and deploys your application according to the defined workflow every time there is a code change. 
+
+
+#### What is a pipeline?
+
+A pipeline is a workflow construct that describes how software changes go through a release process. You define the workflow with a sequence of stages and actions.
+
+#### How do I start a pipeline?
+
+After you create a pipeline, it will automatically trigger a run to release the latest revision of your source code. From then on, every time you make a change to your source location, a new run is triggered. In addition, you can re-run the last revision through a pipeline using the Release Change button in the pipeline console.
+
+#### How can I provision and manage my AWS resources through a release workflow process?
+
+Using AWS CodePipeline and AWS CloudFormation, you can use continuous delivery to automatically build and test changes to your AWS CloudFormation stacks before promoting them to production stacks. This release process lets you rapidly and reliably make changes to your AWS infrastructure
+
+
+#### Integrations
+
+AWS CodePipeline integrates with AWS services such as AWS CodeCommit, Amazon S3, AWS CodeBuild, AWS CodeDeploy, AWS Elastic Beanstalk, AWS CloudFormation, AWS OpsWorks, Amazon ECS, and AWS Lambda. In addition, AWS CodePipeline integrates with a number of partner tools.
+
