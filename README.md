@@ -444,8 +444,7 @@ By default, an alias points to a single Lambda function version. When the alias 
 ```
 aws lambda create-alias --name alias name --function-name function-name \ --function-version 1
 --routing-config AdditionalVersionWeights={"2"=0.02}
--```
-
+```
 
 ### AWS Step Functions
 
