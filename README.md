@@ -140,6 +140,20 @@ Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-perform
 
 ### VPC 
 
+####  What are the components of Amazon VPC?
+
+Amazon VPC comprises a variety of objects that will be familiar to customers with existing networks:
+
+    A Virtual Private Cloud: A logically isolated virtual network in the AWS cloud. You define a VPC’s IP address space from ranges you select.
+    Subnet: A segment of a VPC’s IP address range where you can place groups of isolated resources.
+    Internet Gateway: The Amazon VPC side of a connection to the public Internet.
+    NAT Gateway: A highly available, managed Network Address Translation (NAT) service for your resources in a private subnet to access the Internet.
+    Virtual private gateway: The Amazon VPC side of a VPN connection.
+    Peering Connection: A peering connection enables you to route traffic via private IP addresses between two peered VPCs.
+    VPC Endpoints: Enables private connectivity to services hosted in AWS, from within your VPC without using an Internet Gateway, VPN, Network Address Translation (NAT) devices, or firewall proxies.
+    Egress-only Internet Gateway: A stateful gateway to provide egress only access for IPv6 traffic from the VPC to the Internet.
+
+
 #### VPC and Subnets
 
 https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
@@ -151,7 +165,6 @@ When you create a VPC, you must specify a range of IPv4 addresses for the VPC in
 A VPC spans all the Availability Zones in the region. After creating a VPC, you can add one or more subnets in each Availability Zone. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block. Each subnet must reside entirely within one Availability Zone and cannot span zones. Availability Zones are distinct locations that are engineered to be isolated from failures in other Availability Zones. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single location. We assign a unique ID to each subnet.
 
 You can also optionally assign an IPv6 CIDR block to your VPC, and assign IPv6 CIDR blocks to your subnets. 
-
 
 #### Endpoints
 
