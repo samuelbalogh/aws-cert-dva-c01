@@ -144,14 +144,28 @@ Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-perform
 
 Amazon VPC comprises a variety of objects that will be familiar to customers with existing networks:
 
-    A Virtual Private Cloud: A logically isolated virtual network in the AWS cloud. You define a VPC’s IP address space from ranges you select.
-    Subnet: A segment of a VPC’s IP address range where you can place groups of isolated resources.
-    Internet Gateway: The Amazon VPC side of a connection to the public Internet.
-    NAT Gateway: A highly available, managed Network Address Translation (NAT) service for your resources in a private subnet to access the Internet.
-    Virtual private gateway: The Amazon VPC side of a VPN connection.
-    Peering Connection: A peering connection enables you to route traffic via private IP addresses between two peered VPCs.
-    VPC Endpoints: Enables private connectivity to services hosted in AWS, from within your VPC without using an Internet Gateway, VPN, Network Address Translation (NAT) devices, or firewall proxies.
-    Egress-only Internet Gateway: A stateful gateway to provide egress only access for IPv6 traffic from the VPC to the Internet.
+- A Virtual Private Cloud: A logically isolated virtual network in the AWS cloud. You define a VPC’s IP address space from ranges you select.
+- Subnet: A segment of a VPC’s IP address range where you can place groups of isolated resources.
+- Internet Gateway: The Amazon VPC side of a connection to the public Internet.
+- NAT Gateway: A highly available, managed Network Address Translation (NAT) service for your resources in a private subnet to access the Internet.
+- Virtual private gateway: The Amazon VPC side of a VPN connection.
+- Peering Connection: A peering connection enables you to route traffic via private IP addresses between two peered VPCs.
+- VPC Endpoints: Enables private connectivity to services hosted in AWS, from within your VPC without using an Internet Gateway, VPN, Network Address Translation (NAT) devices, or firewall proxies.
+- Egress-only Internet Gateway: A stateful gateway to provide egress only access for IPv6 traffic from the VPC to the Internet.
+    
+#### How do I get started with Amazon VPC?
+ 
+Your AWS resources are automatically provisioned in a ready-to-use default VPC. You can choose to create additional VPCs by going to the Amazon VPC page in the AWS Management Console and selecting "Start VPC Wizard".
+ 
+You’ll be presented with four basic options for network architectures. After selecting an option, you can modify the size and IP address range of the VPC and its subnets. If you select an option with Hardware VPN Access, you will need to specify the IP address of the VPN hardware on your network. You can modify the VPC to add or remove secondary IP ranges and gateways, or add more subnets to IP ranges.
+ 
+The four options are:
+
+    Amazon VPC with a single public subnet only
+    Amazon VPC with public and private subnets
+    Amazon VPC with public and private subnets and AWS Site-to-Site VPN access
+    Amazon VPC with a private subnet only and AWS Site-to-Site VPN access
+
 
 
 #### VPC and Subnets
