@@ -312,7 +312,14 @@ You can monitor the MySQL error log, slow query log, and the general log. The My
 
 ### Sequence of Hooks
 
-#### In-place deployments
+#### Lambda Function Version Deployment
+
+In a serverless Lambda function version deployment, event hooks run in the following order:
+
+![lifecycle-event-order-lambda.png](lifecycle-event-order-lambda.png)
+
+
+#### EC2 - In-place deployments
 
 In an in-place deployment, including the rollback of an in-place deployment, event hooks are run in the following order:
 
@@ -320,7 +327,7 @@ In an in-place deployment, including the rollback of an in-place deployment, eve
 
 https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-run-order-ecs
 
-#### Blue/green deployments
+#### EC2 - Blue/green deployments
 
 In a blue/green deployment, event hooks are run in the following order:
 
