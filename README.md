@@ -105,6 +105,8 @@
 
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html
 
+![intro-diagram _policies_800](intro-diagram _policies_800.png)
+
 ### IAM Users
 
 The IAM user represents the person or service who uses the IAM user to interact with AWS. A primary use for IAM users is to give people the ability to sign in to the AWS Management Console for interactive tasks and to make programmatic requests to AWS services using the API or CLI. A user in AWS consists of a name, a password to sign into the AWS Management Console, and up to two access keys that can be used with the API or CLI. When you create an IAM user, you grant it permissions by making it a member of a group that has appropriate permission policies attached (recommended), or by directly attaching policies to the user.
