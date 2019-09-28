@@ -312,6 +312,8 @@ You can monitor the MySQL error log, slow query log, and the general log. The My
 
 ### Sequence of Hooks
 
+![lifecycle-event-order-in-place.png](lifecycle-event-order-in-place.png)
+
 https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-run-order-ecs
 
 ### Deployment, Rollback, Redeployment
