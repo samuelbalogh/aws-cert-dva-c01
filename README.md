@@ -179,6 +179,10 @@ Elastic Beanstalk creates an application version whenever you upload source code
 
 Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-performance container orchestration service that supports Docker containers and allows you to easily run and scale containerized applications on AWS.
 
+### I want to launch containers. Why do I have to launch Tasks?
+
+Docker encourages you to split your applications up into their individual components, and Elastic Container Service is optimized for this pattern. Tasks allow you to define a set of containers that you would like to be placed together (or part of the same placement decision), their properties, and how they may be linked. Tasks include all the information that Amazon ECS needs to make the placement decision. To launch a single container, your Task Definition should only include one container definition.
+
 ## VPC 
 
 ###  What are the components of Amazon VPC?
