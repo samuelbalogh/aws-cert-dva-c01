@@ -256,7 +256,8 @@ Monitoring Tools
 
 AWS provides various tools that you can use to monitor Amazon RDS. You can configure some of these tools to do the monitoring for you, while some of the tools require manual intervention. We recommend that you automate monitoring tasks as much as possible.
 
-Automated Monitoring Tools
+Automated Monitoring Tools  
+
 You can use the following automated monitoring tools to watch Amazon RDS and report when something is wrong:
 
 Amazon RDS Events – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. For more information, see Using Amazon RDS Event Notification.
