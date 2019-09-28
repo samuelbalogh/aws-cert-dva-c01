@@ -202,10 +202,10 @@ You’ll be presented with four basic options for network architectures. After s
  
 The four options are:
 
-    Amazon VPC with a single public subnet only
-    Amazon VPC with public and private subnets
-    Amazon VPC with public and private subnets and AWS Site-to-Site VPN access
-    Amazon VPC with a private subnet only and AWS Site-to-Site VPN access
+- Amazon VPC with a single public subnet only
+- Amazon VPC with public and private subnets
+- Amazon VPC with public and private subnets and AWS Site-to-Site VPN access
+- Amazon VPC with a private subnet only and AWS Site-to-Site VPN access
 
 ### VPC and Subnets
 
@@ -312,9 +312,19 @@ You can monitor the MySQL error log, slow query log, and the general log. The My
 
 ### Sequence of Hooks
 
+#### In-place deployments
+
+In an in-place deployment, including the rollback of an in-place deployment, event hooks are run in the following order:
+
 ![lifecycle-event-order-in-place.png](lifecycle-event-order-in-place.png)
 
 https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-run-order-ecs
+
+#### Blue/green deployments
+
+In a blue/green deployment, event hooks are run in the following order:
+
+![lifecycle-event-order-blue-green.png](lifecycle-event-order-blue-green.png)
 
 ### Deployment, Rollback, Redeployment
 
