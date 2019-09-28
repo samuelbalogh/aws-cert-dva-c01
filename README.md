@@ -105,7 +105,7 @@
 
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html
 
-![intro-diagram _policies_800.png](intro-diagram _policies_800.png)
+![intro-diagram-policies-800.png](intro-diagram-policies-800.png)
 
 ### IAM Users
 
