@@ -2,6 +2,11 @@
 
 <!-- vim-markdown-toc GFM -->
 
+* [AWS IAM](#aws-iam)
+  * [IAM Users](#iam-users)
+  * [IAM Groups](#iam-groups)
+  * [IAM Roles](#iam-roles)
+  * [Temporary credentials](#temporary-credentials)
 * [AWS Cloudformation](#aws-cloudformation)
   * [What is AWS CloudFormation?](#what-is-aws-cloudformation)
   * [Concepts](#concepts)
@@ -19,6 +24,8 @@
   * [How do I get started with Amazon VPC?](#how-do-i-get-started-with-amazon-vpc)
   * [VPC and Subnets](#vpc-and-subnets)
   * [Endpoints](#endpoints)
+* [AWS DNS](#aws-dns)
+* [AWS Elastic IP](#aws-elastic-ip)
 * [AWS RDS](#aws-rds)
   * [Connecting to an RDS instance](#connecting-to-an-rds-instance)
   * [Monitoring](#monitoring)
@@ -75,7 +82,7 @@
   * [What is a data node?](#what-is-a-data-node)
   * [What is a pipeline?](#what-is-a-pipeline)
   * [What is an activity?](#what-is-an-activity)
-* [X-ray](#x-ray)
+* [AWS X-ray](#aws-x-ray)
 * [AWS Quicksight](#aws-quicksight)
 * [AWS Batch](#aws-batch)
   * [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
@@ -89,6 +96,28 @@
   * [Integrations](#integrations)
 
 <!-- vim-markdown-toc -->
+
+## AWS IAM
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html
+
+### IAM Users
+
+The IAM user represents the person or service who uses the IAM user to interact with AWS. A primary use for IAM users is to give people the ability to sign in to the AWS Management Console for interactive tasks and to make programmatic requests to AWS services using the API or CLI. A user in AWS consists of a name, a password to sign into the AWS Management Console, and up to two access keys that can be used with the API or CLI. When you create an IAM user, you grant it permissions by making it a member of a group that has appropriate permission policies attached (recommended), or by directly attaching policies to the user.
+
+### IAM Groups
+
+An IAM group is a collection of IAM users. You can use groups to specify permissions for a collection of users, which can make those permissions easier to manage for those users. For example, you could have a group called Admins and give that group the types of permissions that administrators typically need. Any user in that group automatically has the permissions that are assigned to the group.
+
+### IAM Roles
+
+An IAM role is very similar to a user, in that it is an identity with permission policies that determine what the identity can and cannot do in AWS. However, a role does not have any credentials (password or access keys) associated with it. Instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it.
+
+A role can be assigned to a federated user who signs in by using an external identity provider instead of IAM. AWS uses details passed by the identity provider to determine which role is mapped to the federated user.
+
+### Temporary credentials
+
+Temporary credentials are primarily used with IAM roles, but there are also other uses. You can request temporary credentials that have a more restricted set of permissions than your standard IAM user. This prevents you from accidentally performing tasks that are not permitted by the more restricted credentials.
 
 ## AWS Cloudformation
 
@@ -178,8 +207,6 @@ The four options are:
     Amazon VPC with public and private subnets and AWS Site-to-Site VPN access
     Amazon VPC with a private subnet only and AWS Site-to-Site VPN access
 
-
-
 ### VPC and Subnets
 
 https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html
@@ -197,6 +224,23 @@ You can also optionally assign an IPv6 CIDR block to your VPC, and assign IPv6 C
 A VPC endpoint enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection. Instances in your VPC do not require public IP addresses to communicate with resources in the service. Traffic between your VPC and the other service does not leave the Amazon network.
 
 Endpoints are virtual devices. They are horizontally scaled, redundant, and highly available VPC components that allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic.
+
+## AWS DNS
+
+## AWS Elastic IP
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html
+
+An Elastic IP address is a static IPv4 address designed for dynamic cloud computing. An Elastic IP address is associated with your AWS account. With an Elastic IP address, you can mask the failure of an instance or software by rapidly remapping the address to another instance in your account.
+
+An Elastic IP address is a public IPv4 address, which is reachable from the internet. If your instance does not have a public IPv4 address, you can associate an Elastic IP address with your instance to enable communication with the internet; for example, to connect to your instance from your local computer.
+
+- To use an Elastic IP address, you first allocate one to your account, and then associate it with your instance or a network interface.
+- An Elastic IP address is for use in a specific Region only.
+- When you associate an Elastic IP address with an instance that previously had a public IPv4 address, the public DNS hostname of the instance changes to match the Elastic IP address.
+- We resolve a public DNS hostname to the public IPv4 address or the Elastic IP address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance.
+- To ensure efficient use of Elastic IP addresses, we impose a small hourly charge if an Elastic IP address is not associated with a running instance, or if it is associated with a stopped instance or an unattached network interface. While your instance is running, you are not charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance.
+
 
 ## AWS RDS
 
@@ -620,7 +664,29 @@ A pipeline is the AWS Data Pipeline resource that contains the definition of the
 An activity is an action that AWS Data Pipeline initiates on your behalf as part of a pipeline. Example activities are EMR or Hive jobs, copies, SQL queries, or command-line scripts.
 
 
-## X-ray
+## AWS X-ray
+
+AWS X-Ray helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture. With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors. X-Ray provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components.
+
+X-Ray provides a user-centric model, instead of service-centric or resource-centric model, for collecting data related to requests made to your application. This model enables you to create a user-centric picture of requests as they travel across services and resources.
+
+What is a trace?
+
+An X-Ray trace is a set of data points that share the same trace ID. For example, when a client makes a request to your application, it is assigned a unique trace ID. As the request makes its way through services in your application, the services relay information regarding the request back to X-Ray using this unique trace ID. The piece of information relayed by each service in your application to X-Ray is a segment, and a trace is a collection of segments.
+
+What is a segment? 
+
+An X-Ray segment encapsulates all the data points for a single component (for example, authorization service) of the distributed application. 
+
+What is an annotation?
+
+An X-Ray annotation is system-defined or user-defined data associated with a segment. A segment can contain multiple annotations. 
+
+X-Ray makes it easy for you to:
+
+ - Create a service map – By tracking requests made to your applications, X-Ray can create a map of services used by your application. This provides you with a view of connections among services in your application, and enables you to create a dependency tree, detect latency or errors when working across AWS Availability Zones or Regions, zero in on services not operating as expected, and so on.
+- Identify errors and bugs – X-Ray can automatically highlight bugs or errors in your application code by analyzing the response code for each request made to your application. This enables easy debugging of application code without requiring you to reproduce the bug or error.
+- Build your own analysis and visualization apps – X-Ray provides a set of query APIs you can use to build your own analysis and visualizations apps that use the data that X-Ray records.
 
 The X-Ray SDK provides:
 
