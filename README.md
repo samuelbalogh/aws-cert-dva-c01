@@ -30,6 +30,8 @@
   * [What is DNS Failover?](#what-is-dns-failover)
   * [Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?](#does-dns-failover-support-elastic-load-balancers-elbs-as-endpoints)
 * [AWS Elastic IP](#aws-elastic-ip)
+* [AWS EBS](#aws-ebs)
+  * [Snapshots](#snapshots)
 * [AWS RDS](#aws-rds)
   * [Connecting to an RDS instance](#connecting-to-an-rds-instance)
   * [Monitoring](#monitoring)
@@ -65,6 +67,8 @@
   * [Data Firehose](#data-firehose)
   * [Server-Side Encryption with Kinesis Data Streams as the Data Source](#server-side-encryption-with-kinesis-data-streams-as-the-data-source)
 * [AWS DynamoDB](#aws-dynamodb)
+  * [Local seconday indexes](#local-seconday-indexes)
+  * [Global secondary index](#global-secondary-index)
   * [Read Request Units and Write Request Units](#read-request-units-and-write-request-units)
   * [Streams](#streams-1)
   * [DynamoDB Streams and AWS Lambda Triggers](#dynamodb-streams-and-aws-lambda-triggers)
@@ -82,6 +86,9 @@
 * [AWS EFS](#aws-efs)
 * [AWS Lambda](#aws-lambda)
   * [Deployment](#deployment)
+  * [Misc](#misc)
+  * [Limits](#limits)
+  * [Debugging](#debugging)
   * [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
   * [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
   * [AWS SAM](#aws-sam)
@@ -268,6 +275,21 @@ An Elastic IP address is a public IPv4 address, which is reachable from the inte
 - When you associate an Elastic IP address with an instance that previously had a public IPv4 address, the public DNS hostname of the instance changes to match the Elastic IP address.
 - We resolve a public DNS hostname to the public IPv4 address or the Elastic IP address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance.
 - To ensure efficient use of Elastic IP addresses, we impose a small hourly charge if an Elastic IP address is not associated with a running instance, or if it is associated with a stopped instance or an unattached network interface. While your instance is running, you are not charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance.
+
+
+## AWS EBS
+
+Amazon Elastic Block Store (Amazon EBS) provides block level storage volumes for use with EC2 instances. EBS volumes behave like raw, unformatted block devices. You can mount these volumes as devices on your instances. You can mount multiple volumes on the same instance, but each volume can be attached to only one instance at a time. You can create a file system on top of these volumes, or use them in any way you would use a block device (like a hard drive). You can dynamically change the configuration of a volume attached to an instance.
+
+Amazon EBS is recommended when data must be quickly accessible and requires long-term persistence. EBS volumes are particularly well-suited for use as the primary storage for file systems, databases, or for any applications that require fine granular updates and access to raw, unformatted, block-level storage. Amazon EBS is well suited to both database-style applications that rely on random reads and writes, and to throughput-intensive applications that perform long, continuous reads and writes.
+
+### Snapshots
+
+You can back up the data on your Amazon EBS volumes to Amazon S3 by taking point-in-time snapshots. Snapshots are incremental backups, which means that only the blocks on the device that have changed after your most recent snapshot are saved. This minimizes the time required to create the snapshot and saves on storage costs by not duplicating data. When you delete a snapshot, only the data unique to that snapshot is removed. Each snapshot contains all of the information that is needed to restore your data (from the moment when the snapshot was taken) to a new EBS volume.
+
+Multi-Volume Snapshots
+
+Snapshots can be used to create a backup of critical workloads, such as a large database or a file system that spans across multiple EBS volumes. Multi-volume snapshots allow you to take exact point-in-time, data coordinated, and crash-consistent snapshots across multiple EBS volumes attached to an EC2 instance. You
 
 
 ## AWS RDS
@@ -554,6 +576,22 @@ When you send data from your data producers to your data stream, Kinesis Data St
 
 ## AWS DynamoDB 
 
+### Local seconday indexes
+
+To give your application a choice of sort keys, you can create one or more local secondary indexes on an Amazon DynamoDB table and issue Query or Scan requests against these indexes.
+
+A local secondary index maintains an alternate sort key for a given partition key value. A local secondary index also contains a copy of some or all of the attributes from its base table. You specify which attributes are projected into the local secondary index when you create the table. The data in a local secondary index is organized by the same partition key as the base table, but with a different sort key. This lets you access data items efficiently across this different dimension. For greater query or scan flexibility, you can create up to five local secondary indexes per table.
+
+A local secondary index lets you query over a single partition, as specified by the hash key value in the query. A **global secondary** index lets you query over the entire table, across all partitions.
+
+### Global secondary index 
+
+An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered "global" because queries on the index can span all of the data in the base table, across all partitions. A global secondary index has no size limitations and has its own provisioned throughput settings for read and write activity that are separate from those of the table.
+
+To speed up queries on non-key attributes, you can create a global secondary index. A global secondary index contains a selection of attributes from the base table, but they are organized by a primary key that is different from that of the table. The index key does not need to have any of the key attributes from the table. It doesn't even need to have the same key schema as a table.
+
+Every global secondary index must have a partition key, and can have an optional sort key. The index key schema can be different from the base table schema. You could have a table with a simple primary key (partition key), and create a global secondary index with a composite primary key (partition key and sort key)—or vice versa. 
+
 ### Read Request Units and Write Request Units
 
 For on-demand mode tables, you don't need to specify how much read and write throughput you expect your application to perform. DynamoDB charges you for the reads and writes that your application performs on your tables in terms of read request units and write request units.
@@ -669,6 +707,34 @@ To create a Lambda function you first create a Lambda function deployment packag
 AWS Lambda Deployment Package in Python
 
 A deployment package is a ZIP archive that contains your function code and dependencies. You need to create a deployment package if you use the Lambda API to manage functions, or if you need to include libraries and dependencies other than the AWS SDK. You can upload the package directly to Lambda, or you can use an Amazon S3 bucket, and then upload it to Lambda. If the deployment package is larger than 50 MB, you must use Amazon S3.
+
+### Misc
+
+- Default timeout: 3s
+- CPU is allocated in proportion to the configured memory. 
+- Separate the Lambda handler from your core logic. This allows you to make a more unit-testable function. 
+- Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
+- Use AWS Lambda Environment Variables to pass operational parameters to your function.
+- Minimize your deployment package size to its runtime necessities. This will reduce the amount of time that it takes for your deployment package to be downloaded and unpacked ahead of invocation. 
+- Avoid using recursive code in your Lambda function, wherein the function automatically calls itself until some arbitrary criteria is met. This could lead to unintended volume of function invocations and escalated costs.
+
+
+### Limits
+
+- Concurrent executions: 1,000
+- Function and layer storage: 75 GB
+- Memory allocation: from 128 MB to 3008 MB
+- Deployment package size: 
+  - 50 MB (zipped, for direct upload)
+  - 250 MB (unzipped, including layers)
+  - 3 MB (console editor)
+- `/tmp` directory storage: 512 MB
+
+### Debugging
+
+AWS Lambda automatically monitors Lambda functions on your behalf, reporting metrics through Amazon CloudWatch. To help you troubleshoot failures in a function, Lambda logs all requests handled by your function and also automatically stores logs generated by your code through Amazon CloudWatch Logs.
+
+You can insert logging statements into your code to help you validate that your code is working as expected. Lambda automatically integrates with CloudWatch Logs and pushes all logs from your code to a CloudWatch Logs group associated with a Lambda function, which is named /aws/lambda/<function name>.
 
 ### Traffic Shifting Using Aliases
 
