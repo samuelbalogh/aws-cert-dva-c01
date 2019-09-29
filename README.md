@@ -20,6 +20,8 @@
     * [Managing Application Versions](#managing-application-versions)
 * [AWS ECS](#aws-ecs)
   * [I want to launch containers. Why do I have to launch Tasks?](#i-want-to-launch-containers-why-do-i-have-to-launch-tasks)
+* [AWS EC2](#aws-ec2)
+  * [Tenancy types](#tenancy-types)
 * [VPC](#vpc)
   * [What are the components of Amazon VPC?](#what-are-the-components-of-amazon-vpc)
   * [How do I get started with Amazon VPC?](#how-do-i-get-started-with-amazon-vpc)
@@ -86,6 +88,7 @@
 * [AWS EFS](#aws-efs)
 * [AWS Lambda](#aws-lambda)
   * [Deployment](#deployment)
+  * [Layers](#layers)
   * [Misc](#misc)
   * [Limits](#limits)
   * [Debugging](#debugging)
@@ -116,7 +119,7 @@
 
 ## AWS IAM
 
-https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html
+[Link to AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
 
 ![intro-diagram-policies-800.png](intro-diagram-policies-800.png)
 
@@ -139,6 +142,8 @@ A role can be assigned to a federated user who signs in by using an external ide
 Temporary credentials are primarily used with IAM roles, but there are also other uses. You can request temporary credentials that have a more restricted set of permissions than your standard IAM user. This prevents you from accidentally performing tasks that are not permitted by the more restricted credentials.
 
 ## AWS Cloudformation
+
+[Link to AWS](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html)
 
 ### What is AWS CloudFormation? 
 
@@ -178,6 +183,8 @@ AWS CloudFormation StackSets extends the functionality of stacks by enabling you
 
 ## Elastic Beanstalk 
 
+[Link to AWS](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html)
+
 ### Config files
 
 You can add AWS Elastic Beanstalk configuration files (.ebextensions) to your web application's source code to configure your environment and customize the AWS resources that it contains. Configuration files are YAML- or JSON-formatted documents with a .config file extension that you place in a folder named .ebextensions and deploy in your application source bundle.
@@ -196,13 +203,45 @@ Elastic Beanstalk creates an application version whenever you upload source code
 
 ## AWS ECS
 
+[Link to AWS](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html)
+
 Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-performance container orchestration service that supports Docker containers and allows you to easily run and scale containerized applications on AWS.
 
 ### I want to launch containers. Why do I have to launch Tasks?
 
 Docker encourages you to split your applications up into their individual components, and Elastic Container Service is optimized for this pattern. Tasks allow you to define a set of containers that you would like to be placed together (or part of the same placement decision), their properties, and how they may be linked. Tasks include all the information that Amazon ECS needs to make the placement decision. To launch a single container, your Task Definition should only include one container definition.
 
+## AWS EC2
+
+Amazon EC2 provides the following features:
+
+- Virtual computing environments, known as instances
+- Preconfigured templates for your instances, known as Amazon Machine Images (AMIs), that package the bits you need for your server (including the operating system and additional software)
+- Various configurations of CPU, memory, storage, and networking capacity for your instances, known as instance types
+- Secure login information for your instances using key pairs (AWS stores the public key, and you store the private key in a secure place)
+- Storage volumes for temporary data that's deleted when you stop or terminate your instance, known as instance store volumes
+- Persistent storage volumes for your data using Amazon Elastic Block Store (Amazon EBS), known as Amazon EBS volumes
+- Multiple physical locations for your resources, such as instances and Amazon EBS volumes, known as Regions and Availability Zones
+- A firewall that enables you to specify the protocols, ports, and source IP ranges that can reach your instances using security groups
+- Static IPv4 addresses for dynamic cloud computing, known as Elastic IP addresses
+- Metadata, known as tags, that you can create and assign to your Amazon EC2 resources
+- Virtual networks you can create that are logically isolated from the rest of the AWS cloud, and that you can optionally connect to your own network, known as virtual private clouds (VPCs)
+
+### Tenancy types
+
+Amazon EC2 provides the following purchasing options to enable you to optimize your costs based on your needs:
+
+- On-Demand Instances – Pay, by the second, for the instances that you launch.
+- Reserved Instances – Purchase, at a significant discount, instances that are always available, for a term from one to three years.
+- Scheduled Instances – Purchase instances that are always available on the specified recurring schedule, for a one-year term.
+- Spot Instances – Request unused EC2 instances, which can lower your Amazon EC2 costs significantly.
+- Dedicated Hosts – Pay for a physical host that is fully dedicated to running your instances, and bring your existing per-socket, per-core, or per-VM software licenses to reduce costs.
+- Dedicated Instances – Pay, by the hour, for instances that run on single-tenant hardware.
+- Capacity Reservations – Reserve capacity for your EC2 instances in a specific Availability Zone for any duration.
+
 ## VPC 
+
+[Link to AWS](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
 
 ###  What are the components of Amazon VPC?
 
@@ -250,6 +289,8 @@ Endpoints are virtual devices. They are horizontally scaled, redundant, and high
 
 ## AWS DNS
 
+[Link to AWS](https://aws.amazon.com/route53/)
+
 ### What is the difference between a Domain and a Hosted Zone?
 
 A domain is a general DNS concept. Domain names are easily recognizable names for numerically addressed Internet resources. For example, amazon.com is a domain. A hosted zone is an Amazon Route 53 concept. A hosted zone is analogous to a traditional DNS zone file; it represents a collection of records that can be managed together, belonging to a single parent domain name. All resource record sets within a hosted zone must have the hosted zone’s domain name as a suffix. For example, the amazon.com hosted zone may contain records named www.amazon.com, and www.aws.amazon.com, but not a record named www.amazon.ca.
@@ -291,8 +332,24 @@ Multi-Volume Snapshots
 
 Snapshots can be used to create a backup of critical workloads, such as a large database or a file system that spans across multiple EBS volumes. Multi-volume snapshots allow you to take exact point-in-time, data coordinated, and crash-consistent snapshots across multiple EBS volumes attached to an EC2 instance. You
 
-
 ## AWS RDS
+
+[Link to AWS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+
+Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, operate, and scale a relational database in the AWS Cloud. It provides cost-efficient, resizeable capacity for an industry-standard relational database and manages common database administration tasks.
+
+The basic building block of Amazon RDS is the DB instance. A DB instance is an isolated database environment in the AWS Cloud. Your DB instance can contain multiple user-created databases. You can access your DB instance by using the same tools and applications that you use with a standalone database instance. You can create and modify a DB instance by using the AWS Command Line Interface, the Amazon RDS API, or the AWS Management Console.
+
+Each DB instance runs a DB engine. Amazon RDS currently supports the MySQL, MariaDB, PostgreSQL, Oracle, and Microsoft SQL Server DB engines. Each DB engine has its own supported features, and each version of a DB engine may include specific features. Additionally, each DB engine has a set of parameters in a DB parameter group that control the behavior of the databases that it manages.
+
+The computation and memory capacity of a DB instance is determined by its DB instance class. You can select the DB instance that best meets your needs. If your needs change over time, you can change DB instances.
+
+DB instance storage comes in three types: Magnetic, General Purpose (SSD), and Provisioned IOPS (PIOPS). They differ in performance characteristics and price, allowing you to tailor your storage performance and cost to the needs of your database.
+
+You can run your DB instance in several Availability Zones, an option called a Multi-AZ deployment. When you choose this option, Amazon automatically provisions and maintains a secondary standby DB instance in a different Availability Zone. Your primary DB instance is synchronously replicated across Availability Zones to the secondary instance. 
+
+A security group controls the access to a DB instance. It does so by allowing access to IP address ranges or Amazon EC2 instances that you specify.
+
 
 ### Connecting to an RDS instance
 
@@ -306,15 +363,15 @@ Monitoring Tools
 
 AWS provides various tools that you can use to monitor Amazon RDS. You can configure some of these tools to do the monitoring for you, while some of the tools require manual intervention. We recommend that you automate monitoring tasks as much as possible.
 
-Automated Monitoring Tools  
+*Automated Monitoring Tools*
 
 You can use the following automated monitoring tools to watch Amazon RDS and report when something is wrong:
 
-Amazon RDS Events – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. For more information, see Using Amazon RDS Event Notification.
+*Amazon RDS Events* – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. For more information, see Using Amazon RDS Event Notification.
 
-Database log files – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. For more information, see Amazon RDS Database Log Files.
+*Database log files* – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. For more information, see Amazon RDS Database Log Files.
 
-Amazon RDS Enhanced Monitoring — Look at metrics in real time for the operating system. For more information, see Enhanced Monitoring.
+*Amazon RDS Enhanced Monitoring* — Look at metrics in real time for the operating system. For more information, see Enhanced Monitoring.
 
 In addition, Amazon RDS integrates with Amazon CloudWatch for additional monitoring capabilities:
 
@@ -322,9 +379,9 @@ Amazon CloudWatch Metrics – Amazon RDS automatically sends metrics to CloudWat
 
 Amazon CloudWatch Alarms – You can watch a single Amazon RDS metric over a specific time period, and perform one or more actions based on the value of the metric relative to a threshold you set. For more information, see Monitoring with Amazon CloudWatch
 
-Amazon CloudWatch Logs – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. For more information, see Amazon CloudWatch Logs User Guide
+*Amazon CloudWatch Logs* – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. For more information, see Amazon CloudWatch Logs User Guide
 
-Manual Monitoring Tools
+Manual Monitoring Tools  
 Another important part of monitoring Amazon RDS involves manually monitoring those items that the CloudWatch alarms don't cover. The Amazon RDS, CloudWatch, AWS Trusted Advisor and other AWS console dashboards provide an at-a-glance view of the state of your AWS environment. We recommend that you also check the log files on your DB instance.
 
 From the Amazon RDS console, you can monitor the following items for your resources:
@@ -707,6 +764,12 @@ To create a Lambda function you first create a Lambda function deployment packag
 AWS Lambda Deployment Package in Python
 
 A deployment package is a ZIP archive that contains your function code and dependencies. You need to create a deployment package if you use the Lambda API to manage functions, or if you need to include libraries and dependencies other than the AWS SDK. You can upload the package directly to Lambda, or you can use an Amazon S3 bucket, and then upload it to Lambda. If the deployment package is larger than 50 MB, you must use Amazon S3.
+
+### Layers
+
+You can configure your Lambda function to pull in additional code and content in the form of layers. A layer is a ZIP archive that contains libraries, a custom runtime, or other dependencies. With layers, you can use libraries in your function without needing to include them in your deployment package.
+
+Layers let you keep your deployment package small, which makes development easier. You can avoid errors that can occur when you install and package dependencies with your function code. For Node.js, Python, and Ruby functions, you can develop your function code in the Lambda console as long as you keep your deployment package under 3 MB.
 
 ### Misc
 
