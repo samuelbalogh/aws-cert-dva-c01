@@ -26,6 +26,9 @@
 	* [VPC and Subnets](#vpc-and-subnets)
 	* [Endpoints](#endpoints)
 * [AWS DNS](#aws-dns)
+  * [What is the difference between a Domain and a Hosted Zone?](#what-is-the-difference-between-a-domain-and-a-hosted-zone)
+  * [What is DNS Failover?](#what-is-dns-failover)
+  * [Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?](#does-dns-failover-support-elastic-load-balancers-elbs-as-endpoints)
 * [AWS Elastic IP](#aws-elastic-ip)
 * [AWS RDS](#aws-rds)
 	* [Connecting to an RDS instance](#connecting-to-an-rds-instance)
@@ -236,6 +239,18 @@ A VPC endpoint enables you to privately connect your VPC to supported AWS servic
 Endpoints are virtual devices. They are horizontally scaled, redundant, and highly available VPC components that allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic.
 
 ## AWS DNS
+
+### What is the difference between a Domain and a Hosted Zone?
+
+A domain is a general DNS concept. Domain names are easily recognizable names for numerically addressed Internet resources. For example, amazon.com is a domain. A hosted zone is an Amazon Route 53 concept. A hosted zone is analogous to a traditional DNS zone file; it represents a collection of records that can be managed together, belonging to a single parent domain name. All resource record sets within a hosted zone must have the hosted zone’s domain name as a suffix. For example, the amazon.com hosted zone may contain records named www.amazon.com, and www.aws.amazon.com, but not a record named www.amazon.ca.
+
+### What is DNS Failover?
+
+DNS Failover consists of two components: health checks and failover. Health checks are automated requests sent over the Internet to your application to verify that your application is reachable, available, and functional. You can configure the health checks to be similar to the typical requests made by your users, such as requesting a web page from a specific URL. With DNS failover, Route 53 only returns answers for resources that are healthy and reachable from the outside world, so that your end users are routed away from a failed or unhealthy part of your application.
+
+### Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?
+
+Yes, you can configure DNS Failover for Elastic Load Balancers (ELBs). To enable DNS Failover for an ELB endpoint, create an Alias record pointing to the ELB and set the “Evaluate Target Health” parameter to true. Route 53 creates and manages the health checks for your ELB automatically. You do not need to create your own Route 53 health check of the ELB.
 
 ## AWS Elastic IP
 
