@@ -3,104 +3,107 @@
 <!-- vim-markdown-toc GFM -->
 
 * [AWS IAM](#aws-iam)
-	* [IAM Users](#iam-users)
-	* [IAM Groups](#iam-groups)
-	* [IAM Roles](#iam-roles)
-	* [Temporary credentials](#temporary-credentials)
+  * [IAM Users](#iam-users)
+  * [IAM Groups](#iam-groups)
+  * [IAM Roles](#iam-roles)
+  * [Temporary credentials](#temporary-credentials)
 * [AWS Cloudformation](#aws-cloudformation)
-	* [What is AWS CloudFormation?](#what-is-aws-cloudformation)
-	* [Concepts](#concepts)
-	* [How is AWS CloudFormation different from AWS Elastic Beanstalk?](#how-is-aws-cloudformation-different-from-aws-elastic-beanstalk)
-	* [What are the elements of an AWS CloudFormation template?](#what-are-the-elements-of-an-aws-cloudformation-template)
-	* [Stacksets](#stacksets)
+  * [What is AWS CloudFormation?](#what-is-aws-cloudformation)
+  * [Concepts](#concepts)
+  * [How is AWS CloudFormation different from AWS Elastic Beanstalk?](#how-is-aws-cloudformation-different-from-aws-elastic-beanstalk)
+  * [What are the elements of an AWS CloudFormation template?](#what-are-the-elements-of-an-aws-cloudformation-template)
+  * [Stacksets](#stacksets)
 * [Elastic Beanstalk](#elastic-beanstalk)
-	* [Config files](#config-files)
-	* [Custom scripts and programs](#custom-scripts-and-programs)
-	* [Versions](#versions)
-		* [Managing Application Versions](#managing-application-versions)
+  * [Config files](#config-files)
+  * [Custom scripts and programs](#custom-scripts-and-programs)
+  * [Versions](#versions)
+    * [Managing Application Versions](#managing-application-versions)
 * [AWS ECS](#aws-ecs)
-	* [I want to launch containers. Why do I have to launch Tasks?](#i-want-to-launch-containers-why-do-i-have-to-launch-tasks)
+  * [I want to launch containers. Why do I have to launch Tasks?](#i-want-to-launch-containers-why-do-i-have-to-launch-tasks)
 * [VPC](#vpc)
-	* [What are the components of Amazon VPC?](#what-are-the-components-of-amazon-vpc)
-	* [How do I get started with Amazon VPC?](#how-do-i-get-started-with-amazon-vpc)
-	* [VPC and Subnets](#vpc-and-subnets)
-	* [Endpoints](#endpoints)
+  * [What are the components of Amazon VPC?](#what-are-the-components-of-amazon-vpc)
+  * [How do I get started with Amazon VPC?](#how-do-i-get-started-with-amazon-vpc)
+  * [VPC and Subnets](#vpc-and-subnets)
+  * [Endpoints](#endpoints)
 * [AWS DNS](#aws-dns)
   * [What is the difference between a Domain and a Hosted Zone?](#what-is-the-difference-between-a-domain-and-a-hosted-zone)
   * [What is DNS Failover?](#what-is-dns-failover)
   * [Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?](#does-dns-failover-support-elastic-load-balancers-elbs-as-endpoints)
 * [AWS Elastic IP](#aws-elastic-ip)
 * [AWS RDS](#aws-rds)
-	* [Connecting to an RDS instance](#connecting-to-an-rds-instance)
-	* [Monitoring](#monitoring)
-	* [MySQL Database Log Files](#mysql-database-log-files)
+  * [Connecting to an RDS instance](#connecting-to-an-rds-instance)
+  * [Monitoring](#monitoring)
+  * [MySQL Database Log Files](#mysql-database-log-files)
 * [AWS CodeDeploy](#aws-codedeploy)
-	* [Sequence of Hooks](#sequence-of-hooks)
-		* [Lambda Function Version Deployment](#lambda-function-version-deployment)
-		* [EC2 - In-place deployments](#ec2---in-place-deployments)
-		* [EC2 - Blue/green deployments](#ec2---bluegreen-deployments)
-	* [Deployment, Rollback, Redeployment](#deployment-rollback-redeployment)
+  * [Sequence of Hooks](#sequence-of-hooks)
+    * [Lambda Function Version Deployment](#lambda-function-version-deployment)
+    * [EC2 - In-place deployments](#ec2---in-place-deployments)
+    * [EC2 - Blue/green deployments](#ec2---bluegreen-deployments)
+  * [Deployment, Rollback, Redeployment](#deployment-rollback-redeployment)
 * [AWS S3](#aws-s3)
-	* [Best practices](#best-practices)
-	* [Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin](#requiring-https-for-communication-between-cloudfront-and-your-amazon-s3-origin)
-	* [Cross Region Replication](#cross-region-replication)
-	* [MFA](#mfa)
-	* [S3 Inventory](#s3-inventory)
-	* [Object lifecycle management](#object-lifecycle-management)
-		* [Transition actions](#transition-actions)
-		* [Expiration actions](#expiration-actions)
-		* [When Should I Use Lifecycle Configuration?](#when-should-i-use-lifecycle-configuration)
-		* [How Do I Configure a Lifecycle?](#how-do-i-configure-a-lifecycle)
-	* [Configuring Amazon S3 Event Notifications](#configuring-amazon-s3-event-notifications)
+  * [Best practices](#best-practices)
+  * [Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin](#requiring-https-for-communication-between-cloudfront-and-your-amazon-s3-origin)
+  * [Cross Region Replication](#cross-region-replication)
+  * [Policies](#policies)
+  * [Amazon S3 access control lists (ACLs)](#amazon-s3-access-control-lists-acls)
+  * [MFA](#mfa)
+  * [S3 Inventory](#s3-inventory)
+  * [Object lifecycle management](#object-lifecycle-management)
+    * [Transition actions](#transition-actions)
+    * [Expiration actions](#expiration-actions)
+    * [When Should I Use Lifecycle Configuration?](#when-should-i-use-lifecycle-configuration)
+    * [How Do I Configure a Lifecycle?](#how-do-i-configure-a-lifecycle)
+  * [Configuring Amazon S3 Event Notifications](#configuring-amazon-s3-event-notifications)
+  * [S3 Select](#s3-select)
 * [AWS Cognito](#aws-cognito)
-	* [Streams](#streams)
+  * [Streams](#streams)
 * [Kinesis](#kinesis)
-	* [Stream](#stream)
-		* [Kinesis Data Streams High-Level Architecture](#kinesis-data-streams-high-level-architecture)
-		* [Terminology](#terminology)
-		* [Enhanced fan-out](#enhanced-fan-out)
-	* [Data Firehose](#data-firehose)
-	* [Server-Side Encryption with Kinesis Data Streams as the Data Source](#server-side-encryption-with-kinesis-data-streams-as-the-data-source)
+  * [Stream](#stream)
+    * [Kinesis Data Streams High-Level Architecture](#kinesis-data-streams-high-level-architecture)
+    * [Terminology](#terminology)
+    * [Enhanced fan-out](#enhanced-fan-out)
+  * [Data Firehose](#data-firehose)
+  * [Server-Side Encryption with Kinesis Data Streams as the Data Source](#server-side-encryption-with-kinesis-data-streams-as-the-data-source)
 * [AWS DynamoDB](#aws-dynamodb)
-	* [Read Request Units and Write Request Units](#read-request-units-and-write-request-units)
-	* [Streams](#streams-1)
-	* [DynamoDB Streams and AWS Lambda Triggers](#dynamodb-streams-and-aws-lambda-triggers)
-	* [Global Tables](#global-tables)
-	* [DynamoDB Queries](#dynamodb-queries)
-	* [DynamoDB Scans](#dynamodb-scans)
-	* [DynamoDB Scan VS Query](#dynamodb-scan-vs-query)
-	* [Monitoring](#monitoring-1)
+  * [Read Request Units and Write Request Units](#read-request-units-and-write-request-units)
+  * [Streams](#streams-1)
+  * [DynamoDB Streams and AWS Lambda Triggers](#dynamodb-streams-and-aws-lambda-triggers)
+  * [Global Tables](#global-tables)
+  * [DynamoDB Queries](#dynamodb-queries)
+  * [DynamoDB Scans](#dynamodb-scans)
+  * [DynamoDB Scan VS Query](#dynamodb-scan-vs-query)
+  * [Monitoring](#monitoring-1)
 * [AWS System Parameter Store](#aws-system-parameter-store)
 * [API Gateway](#api-gateway)
-	* [Auth](#auth)
-	* [Stage](#stage)
+  * [Auth](#auth)
+  * [Stage](#stage)
 * [AWS KMS](#aws-kms)
-	* [generate-data-key-without-plaintext](#generate-data-key-without-plaintext)
+  * [generate-data-key-without-plaintext](#generate-data-key-without-plaintext)
 * [AWS EFS](#aws-efs)
 * [AWS Lambda](#aws-lambda)
-	* [Deployment](#deployment)
-	* [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
-	* [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
-	* [AWS SAM](#aws-sam)
-		* [AWS SAM Template Concepts](#aws-sam-template-concepts)
+  * [Deployment](#deployment)
+  * [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
+  * [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
+  * [AWS SAM](#aws-sam)
+    * [AWS SAM Template Concepts](#aws-sam-template-concepts)
 * [AWS Step Functions](#aws-step-functions)
 * [AWS Secrets Manager](#aws-secrets-manager)
 * [AWS Data Pipeline](#aws-data-pipeline)
-	* [What is a data node?](#what-is-a-data-node)
-	* [What is a pipeline?](#what-is-a-pipeline)
-	* [What is an activity?](#what-is-an-activity)
+  * [What is a data node?](#what-is-a-data-node)
+  * [What is a pipeline?](#what-is-a-pipeline)
+  * [What is an activity?](#what-is-an-activity)
 * [AWS X-ray](#aws-x-ray)
 * [AWS Quicksight](#aws-quicksight)
 * [AWS Batch](#aws-batch)
-	* [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
+  * [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
 * [AWS SNS](#aws-sns)
-	* [Amazon SNS Message Filtering](#amazon-sns-message-filtering)
+  * [Amazon SNS Message Filtering](#amazon-sns-message-filtering)
 * [AWS CodePipeline](#aws-codepipeline)
-	* [What is AWS CodePipeline?](#what-is-aws-codepipeline)
-	* [What is a pipeline?](#what-is-a-pipeline-1)
-	* [How do I start a pipeline?](#how-do-i-start-a-pipeline)
-	* [How can I provision and manage my AWS resources through a release workflow process?](#how-can-i-provision-and-manage-my-aws-resources-through-a-release-workflow-process)
-	* [Integrations](#integrations)
+  * [What is AWS CodePipeline?](#what-is-aws-codepipeline)
+  * [What is a pipeline?](#what-is-a-pipeline-1)
+  * [How do I start a pipeline?](#how-do-i-start-a-pipeline)
+  * [How can I provision and manage my AWS resources through a release workflow process?](#how-can-i-provision-and-manage-my-aws-resources-through-a-release-workflow-process)
+  * [Integrations](#integrations)
 
 <!-- vim-markdown-toc -->
 
@@ -390,6 +393,20 @@ Increase operational efficiency—If you have compute clusters in two different 
  
 Maintain object copies under different ownership—Regardless of who owns the source object you can tell Amazon S3 to change replica ownership to the AWS account that owns the destination bucket. This is referred to as the owner override option. You might use this option restrict access to object replicas.
 
+### Policies
+
+By default, all Amazon S3 resources—buckets, objects, and related subresources (for example, lifecycle configuration and website configuration)—are private: only the resource owner, an AWS account that created it, can access the resource. The resource owner can optionally grant access permissions to others by writing an access policy.
+
+Amazon S3 offers access policy options broadly categorized as resource-based policies and user policies. Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies. For example, bucket policies and access control lists (ACLs) are resource-based policies. You can also attach access policies to users in your account. These are called user policies. You may choose to use resource-based policies, user policies, or some combination of these to manage permissions to your Amazon S3 resources. 
+
+Bucket policy and user policy are two of the access policy options available for you to grant permission to your Amazon S3 resources. Both use JSON-based access policy language.
+
+### Amazon S3 access control lists (ACLs) 
+
+ACLs enable you to manage access to buckets and objects. Each bucket and object has an ACL attached to it as a subresource. It defines which AWS accounts or groups are granted access and the type of access. When a request is received against a resource, Amazon S3 checks the corresponding ACL to verify that the requester has the necessary access permissions.
+
+When you create a bucket or an object, Amazon S3 creates a default ACL that grants the resource owner full control over the resource.
+
 ### MFA 
 
 You can enforce the MFA authentication requirement using the aws:MultiFactorAuthAge key in a bucket policy. IAM users can access Amazon S3 resources by using temporary credentials issued by the AWS Security Token Service (STS). You provide the MFA code at the time of the STS request.
@@ -448,12 +465,17 @@ The Amazon S3 notification feature enables you to receive notifications when cer
 
 https://docs.aws.amazon.com/AmazonS3/latest/dev/NotificationHowTo.html
 
+### S3 Select
+
+Enables applications to retrieve only a subset of data from an object by using simple SQL expressions.
+
+As an example, let’s imagine you’re a developer at a large retailer and you need to analyze the weekly sales data from a single store, but the data for all 200 stores is saved in a new GZIP-ed CSV every day. Without S3 Select, you would need to download, decompress and process the entire CSV to get the data you needed. With S3 Select, you can use a simple SQL expression to return only the data from the store you’re interested in, instead of retrieving the entire object. 
+
 ## AWS Cognito 
 
 ### Streams
 
 Amazon Cognito Streams gives developers control and insight into their data stored in Amazon Cognito. Developers can now configure a Kinesis stream to receive events as data is updated and synchronized. Amazon Cognito can push each dataset change to a Kinesis stream you own in real time.
-
 
 ## Kinesis 
 
