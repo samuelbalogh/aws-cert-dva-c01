@@ -46,6 +46,7 @@
   * [Deployment, Rollback, Redeployment](#deployment-rollback-redeployment)
 * [AWS S3](#aws-s3)
   * [Best practices](#best-practices)
+  * [Consistency](#consistency)
   * [Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin](#requiring-https-for-communication-between-cloudfront-and-your-amazon-s3-origin)
   * [Cross Region Replication](#cross-region-replication)
   * [Policies](#policies)
@@ -449,6 +450,21 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and
 ### Best practices
 
 Amazon S3 automatically scales to high request rates. For example, your application can achieve at least 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second per prefix in a bucket. There are no limits to the number of prefixes in a bucket.
+
+### Consistency
+
+Amazon S3 provides read-after-write consistency for PUTS of new objects in your S3 bucket in all Regions with one caveat. The caveat is that if you make a HEAD or GET request to the key name (to find if the object exists) before creating the object, Amazon S3 provides eventual consistency for read-after-write.
+
+Amazon S3 offers eventual consistency for overwrite PUTS and DELETES in all Regions.
+
+Updates to a single key are atomic. For example, if you PUT to an existing key, a subsequent read might return the old data or the updated data, but it never returns corrupted or partial data.
+
+Amazon S3 achieves high availability by replicating data across multiple servers within AWS data centers. If a PUT request is successful, your data is safely stored. However, information about the changes must replicate across Amazon S3, which can take some time, and so you might observe the following behaviors:
+
+- A process writes a new object to Amazon S3 and immediately lists keys within its bucket. Until the change is fully propagated, the object might not appear in the list.
+- A process replaces an existing object and immediately tries to read it. Until the change is fully propagated, Amazon S3 might return the previous data.
+- A process deletes an existing object and immediately tries to read it. Until the deletion is fully propagated, Amazon S3 might return the deleted data.
+- A process deletes an existing object and immediately lists keys within its bucket. Until the deletion is fully propagated, Amazon S3 might list the deleted object.
 
 ### Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin
 
