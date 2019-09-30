@@ -60,6 +60,7 @@
     * [How Do I Configure a Lifecycle?](#how-do-i-configure-a-lifecycle)
   * [Configuring Amazon S3 Event Notifications](#configuring-amazon-s3-event-notifications)
   * [S3 Select](#s3-select)
+  * [Amazon S3 Transfer Acceleration](#amazon-s3-transfer-acceleration)
 * [AWS Cognito](#aws-cognito)
   * [Streams](#streams)
 * [Kinesis](#kinesis)
@@ -109,6 +110,8 @@
   * [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
 * [AWS SNS](#aws-sns)
   * [Amazon SNS Message Filtering](#amazon-sns-message-filtering)
+* [AWS CloudWatch](#aws-cloudwatch)
+  * [Publishing metrics](#publishing-metrics)
 * [AWS CodePipeline](#aws-codepipeline)
   * [What is AWS CodePipeline?](#what-is-aws-codepipeline)
   * [What is a pipeline?](#what-is-a-pipeline-1)
@@ -566,6 +569,18 @@ Enables applications to retrieve only a subset of data from an object by using s
 
 As an example, let’s imagine you’re a developer at a large retailer and you need to analyze the weekly sales data from a single store, but the data for all 200 stores is saved in a new GZIP-ed CSV every day. Without S3 Select, you would need to download, decompress and process the entire CSV to get the data you needed. With S3 Select, you can use a simple SQL expression to return only the data from the store you’re interested in, instead of retrieving the entire object. 
 
+
+### Amazon S3 Transfer Acceleration
+
+Enables fast, easy, and secure transfers of files over long distances between your client and an S3 bucket. Transfer Acceleration takes advantage of Amazon CloudFront’s globally distributed edge locations. As the data arrives at an edge location, data is routed to Amazon S3 over an optimized network path.
+
+You might want to use Transfer Acceleration on a bucket for various reasons, including the following:
+
+- You have customers that upload to a centralized bucket from all over the world.
+- You transfer gigabytes to terabytes of data on a regular basis across continents.
+- You are unable to utilize all of your available bandwidth over the Internet when uploading to Amazon S3.
+
+
 ## AWS Cognito 
 
 ### Streams
@@ -932,6 +947,28 @@ Using CloudWatch Events, you can monitor the progress of jobs, build AWS Batch c
 By default, an Amazon SNS topic subscriber receives every message published to the topic. To receive a subset of the messages, a subscriber must assign a filter policy to the topic subscription.
 
 A filter policy is a simple JSON object containing attributes that define which messages the subscriber receives. When you publish a message to a topic, Amazon SNS compares the message attributes to the attributes in the filter policy for each of the topic's subscriptions. If any of the attributes match, Amazon SNS sends the message to the subscriber. Otherwise, Amazon SNS skips the subscriber without sending the message. If a subscription doesn't have a filter policy, the subscription receives every message published to its topic. 
+
+## AWS CloudWatch
+
+Amazon CloudWatch monitors your Amazon Web Services (AWS) resources and the applications you run on AWS in real time. You can use CloudWatch to collect and track metrics, which are variables you can measure for your resources and applications.
+
+*Namespaces*
+
+A namespace is a container for CloudWatch metrics. Metrics in different namespaces are isolated from each other, so that metrics from different applications are not mistakenly aggregated into the same statistics.
+
+There is no default namespace. You must specify a namespace for each data point you publish to CloudWatch. You can specify a namespace name when you create a metric. 
+
+*Metrics*
+
+Metrics are the fundamental concept in CloudWatch. A metric represents a time-ordered set of data points that are published to CloudWatch. Think of a metric as a variable to monitor, and the data points as representing the values of that variable over time. For example, the CPU usage of a particular EC2 instance is one metric provided by Amazon EC2. The data points themselves can come from any application or business activity from which you collect data.
+
+
+
+### Publishing metrics
+
+You can publish your own metrics to CloudWatch using the AWS CLI or an API. You can view statistical graphs of your published metrics with the AWS Management Console.
+
+CloudWatch stores data about a metric as a series of data points. Each data point has an associated time stamp. You can even publish an aggregated set of data points called a statistic set.
 
 
 ## AWS CodePipeline
