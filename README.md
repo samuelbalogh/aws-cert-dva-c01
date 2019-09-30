@@ -371,19 +371,19 @@ AWS provides various tools that you can use to monitor Amazon RDS. You can confi
 
 You can use the following automated monitoring tools to watch Amazon RDS and report when something is wrong:
 
-*Amazon RDS Events* – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. For more information, see Using Amazon RDS Event Notification.
+*Amazon RDS Events* – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. 
 
-*Database log files* – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. For more information, see Amazon RDS Database Log Files.
+*Database log files* – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. 
 
-*Amazon RDS Enhanced Monitoring* — Look at metrics in real time for the operating system. For more information, see Enhanced Monitoring.
+*Amazon RDS Enhanced Monitoring* — Look at metrics in real time for the operating system. 
 
 In addition, Amazon RDS integrates with Amazon CloudWatch for additional monitoring capabilities:
 
-Amazon CloudWatch Metrics – Amazon RDS automatically sends metrics to CloudWatch every minute for each active database. You are not charged additionally for Amazon RDS metrics in CloudWatch. For more information, see Viewing DB Instance Metrics.
+Amazon CloudWatch Metrics – Amazon RDS automatically sends metrics to CloudWatch every minute for each active database. You are not charged additionally for Amazon RDS metrics in CloudWatch. 
 
-Amazon CloudWatch Alarms – You can watch a single Amazon RDS metric over a specific time period, and perform one or more actions based on the value of the metric relative to a threshold you set. For more information, see Monitoring with Amazon CloudWatch
+Amazon CloudWatch Alarms – You can watch a single Amazon RDS metric over a specific time period, and perform one or more actions based on the value of the metric relative to a threshold you set. 
 
-*Amazon CloudWatch Logs* – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. For more information, see Amazon CloudWatch Logs User Guide
+*Amazon CloudWatch Logs* – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. 
 
 Manual Monitoring Tools  
 Another important part of monitoring Amazon RDS involves manually monitoring those items that the CloudWatch alarms don't cover. The Amazon RDS, CloudWatch, AWS Trusted Advisor and other AWS console dashboards provide an at-a-glance view of the state of your AWS environment. We recommend that you also check the log files on your DB instance.
@@ -402,7 +402,7 @@ From the AWS Trusted Advisor dashboard, you can review the following cost optimi
 - Amazon RDS Security Group Access Risk
 - Amazon RDS Backups
 - Amazon RDS Multi-AZ
-- For more information on these checks, see Trusted Advisor Best Practices (Checks).
+- 
 - CloudWatch home page shows:
 - Current alarms and status
 - Graphs of alarms and resources
@@ -527,9 +527,9 @@ There are costs associated with the lifecycle transition requests. For pricing i
 
 Define when objects expire. Amazon S3 deletes expired objects on your behalf.
 
-The lifecycle expiration costs depend on when you choose to expire objects. For more information, see Configuring Object Expiration.
+The lifecycle expiration costs depend on when you choose to expire objects. 
 
-For more information about lifecycle rules, see Lifecycle Configuration Elements.
+
 
 #### When Should I Use Lifecycle Configuration?
 
@@ -555,7 +555,7 @@ GET Bucket lifecycle
 
 DELETE Bucket lifecycle
 
-You can also configure the lifecycle by using the Amazon S3 console or programmatically by using the AWS SDK wrapper libraries. If you need to, you can also make the REST API calls directly. For more information, see Setting Lifecycle Configuration on a Bucket.
+You can also configure the lifecycle by using the Amazon S3 console or programmatically by using the AWS SDK wrapper libraries. If you need to, you can also make the REST API calls directly. 
 
 ### Configuring Amazon S3 Event Notifications
 
@@ -607,7 +607,7 @@ A data record is the unit of data stored in a Kinesis data stream. Data records 
 
 *Retention Period*
 
-The retention period is the length of time that data records are accessible after they are added to the stream. A stream’s retention period is set to a default of 24 hours after creation. You can increase the retention period up to 168 hours (7 days) using the IncreaseStreamRetentionPeriod operation, and decrease the retention period down to a minimum of 24 hours using the DecreaseStreamRetentionPeriod operation. Additional charges apply for streams with a retention period set to more than 24 hours. For more information, see Amazon Kinesis Data Streams Pricing.
+The retention period is the length of time that data records are accessible after they are added to the stream. A stream’s retention period is set to a default of 24 hours after creation. You can increase the retention period up to 168 hours (7 days) using the IncreaseStreamRetentionPeriod operation, and decrease the retention period down to a minimum of 24 hours using the DecreaseStreamRetentionPeriod operation. Additional charges apply for streams with a retention period set to more than 24 hours. 
 
 *Producer* 
 
@@ -646,7 +646,7 @@ Sequence numbers cannot be used as indexes to sets of data within the same strea
 
 The Kinesis Client Library is compiled into your application to enable fault-tolerant consumption of data from the stream. The Kinesis Client Library ensures that for every shard there is a record processor running and processing that shard. The library also simplifies reading data from the stream. The Kinesis Client Library uses an Amazon DynamoDB table to store control data. It creates one table per application that is processing data.
 
-There are two major versions of the Kinesis Client Library. Which one you use depends on the type of consumer you want to create. For more information, see Reading Data from Amazon Kinesis Data Streams.
+There are two major versions of the Kinesis Client Library. Which one you use depends on the type of consumer you want to create. 
 
 *Application Name*
 
@@ -654,7 +654,7 @@ The name of an Amazon Kinesis Data Streams application identifies the applicatio
 
 *Server-Side Encryption*
 
-Amazon Kinesis Data Streams can automatically encrypt sensitive data as a producer enters it into a stream. Kinesis Data Streams uses AWS KMS master keys for encryption. For more information, see Data Protection in Amazon Kinesis Data Streams. 
+Amazon Kinesis Data Streams can automatically encrypt sensitive data as a producer enters it into a stream. Kinesis Data Streams uses AWS KMS master keys for encryption. 
 
 
 #### Enhanced fan-out
@@ -750,29 +750,29 @@ AWS Systems Manager Parameter Store provides secure, hierarchical storage for co
 
 The following mechanisms can be used for authentication and authorization:
 
-Resource policies let you create resource-based policies to allow or deny access to your APIs and methods from specified source IP addresses or VPC endpoints. For more information, see Control Access to an API with Amazon API Gateway Resource Policies.
+Resource policies let you create resource-based policies to allow or deny access to your APIs and methods from specified source IP addresses or VPC endpoints. 
 
-Standard AWS IAM roles and policies offer flexible and robust access controls that can be applied to an entire API or individual methods. IAM roles and policies can be used for controlling who can create and manage your APIs as well as who can invoke them. For more information, see Control Access to an API with IAM Permissions.
+Standard AWS IAM roles and policies offer flexible and robust access controls that can be applied to an entire API or individual methods. IAM roles and policies can be used for controlling who can create and manage your APIs as well as who can invoke them. 
 
-IAM tags can be used together with IAM policies to control access. For more information, see Using Tags to Control Access to API Gateway Resources.
+IAM tags can be used together with IAM policies to control access. 
 
-Endpoint Policies for Interface VPC Endpoints allow you to attach IAM resource policies to interface VPC endpoints to improve the security of your private APIs. For more information, see Use VPC Endpoint Policies for Private APIs in API Gateway.
+Endpoint Policies for Interface VPC Endpoints allow you to attach IAM resource policies to interface VPC endpoints to improve the security of your private APIs. 
 
-Lambda authorizers are Lambda functions that control access to REST API methods using bearer token authentication as well as information described by headers, paths, query strings, stage variables, or context variables request parameters. Lambda authorizers are used to control who can invoke REST API methods. For more information, see Use API Gateway Lambda Authorizers.
+Lambda authorizers are Lambda functions that control access to REST API methods using bearer token authentication as well as information described by headers, paths, query strings, stage variables, or context variables request parameters. Lambda authorizers are used to control who can invoke REST API methods. 
 
-Amazon Cognito user pools let you create customizable authentication and authorization solutions for your REST APIs. Amazon Cognito user pools are used to control who can invoke REST API methods. For more information, see Control Access to a REST API Using Amazon Cognito User Pools as Authorizer.
+Amazon Cognito user pools let you create customizable authentication and authorization solutions for your REST APIs. Amazon Cognito user pools are used to control who can invoke REST API methods. 
 
 The following mechanisms can be used for performing other tasks related to access control:
 
-Cross-origin resource sharing (CORS) lets you control how your REST API responds to cross-domain resource requests. For more information, see Enable CORS for an API Gateway REST API Resource.
+Cross-origin resource sharing (CORS) lets you control how your REST API responds to cross-domain resource requests. 
 
-Client-side SSL certificates can be used to verify that HTTP requests to your backend system are from API Gateway. For more information, see Generate and Configure an SSL Certificate for Backend Authentication.
+Client-side SSL certificates can be used to verify that HTTP requests to your backend system are from API Gateway. 
 
-AWS WAF can be used to protect your API Gateway API from common web exploits. For more information, see Use AWS WAF to Protect Your Amazon API Gateway API from Common Web Exploits.
+AWS WAF can be used to protect your API Gateway API from common web exploits. 
 
 The following mechanisms can be used for tracking and limiting the access that you have granted to authorized clients:
 
-Usage plans let you provide API keys to your customers — and then track and limit usage of your API stages and methods for each API key. For more information, see Create and Use Usage Plans with API Keys.
+Usage plans let you provide API keys to your customers — and then track and limit usage of your API stages and methods for each API key. 
 https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html
 
 ### Stage
