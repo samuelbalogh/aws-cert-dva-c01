@@ -863,6 +863,14 @@ Lambda errors are reported as Lambda.ErrorName. To retry a Lambda service except
    "BackoffRate": 2
 } ]
 
+### Lambda@Edge
+
+[Link to AWS](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html)
+
+Lambda@Edge is a feature of Amazon CloudFront that lets you run code closer to users of your application, which improves performance and reduces latency.
+
+Lambda@Edge runs your code globally at AWS locations close to your users, so you can deliver full-featured, customized content with high performance, and low latency.
+
 
 ### AWS SAM 
 
