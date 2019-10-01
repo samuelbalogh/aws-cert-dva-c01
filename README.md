@@ -18,6 +18,7 @@
   * [Custom scripts and programs](#custom-scripts-and-programs)
   * [Versions](#versions)
     * [Managing Application Versions](#managing-application-versions)
+  * [Deployments](#deployments)
 * [AWS ECS](#aws-ecs)
   * [I want to launch containers. Why do I have to launch Tasks?](#i-want-to-launch-containers-why-do-i-have-to-launch-tasks)
 * [AWS EC2](#aws-ec2)
@@ -96,6 +97,7 @@
   * [Debugging](#debugging)
   * [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
   * [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
+  * [Lambda@Edge](#lambdaedge)
   * [AWS SAM](#aws-sam)
     * [AWS SAM Template Concepts](#aws-sam-template-concepts)
 * [AWS Step Functions](#aws-step-functions)
@@ -204,6 +206,10 @@ Using configuration files is great for configuring and customizing your environm
 #### Managing Application Versions
 
 Elastic Beanstalk creates an application version whenever you upload source code. This usually occurs when you create an environment or upload and deploy code using the environment management console or EB CLI. Elastic Beanstalk deletes these application versions according to the application's lifecycle policy and when you delete the application.
+
+### Deployments 
+
+![beanstalk-deployment-methods.png](beanstalk-deployment-methods.png)
 
 ## AWS ECS
 
@@ -834,6 +840,7 @@ Layers let you keep your deployment package small, which makes development easie
   - 250 MB (unzipped, including layers)
   - 3 MB (console editor)
 - `/tmp` directory storage: 512 MB
+- environment variables: any number, up to 4KB in total size
 
 ### Debugging
 
