@@ -217,6 +217,14 @@ Flow logs can help you with a number of tasks, such as:
 - Monitoring the traffic that is reaching your instance
 - Determining the direction of the traffic to and from the network interfaces
 
+### VPC Peering
+
+[Link to AWS](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html)
+
+A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network. You can create a VPC peering connection between your own VPCs, or with a VPC in another AWS account. The VPCs can be in different regions (also known as an inter-region VPC peering connection).
+
+AWS uses the existing infrastructure of a VPC to create a VPC peering connection; it is neither a gateway nor a VPN connection, and does not rely on a separate piece of physical hardware. There is no single point of failure for communication or a bandwidth bottleneck.
+
 ## AWS DNS
 
 [Link to AWS](https://aws.amazon.com/route53/)
@@ -375,6 +383,12 @@ In a blue/green deployment, event hooks are run in the following order:
 ### Deployment, Rollback, Redeployment
 
 https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html
+
+#### Deployment monitorin & automatic rollback
+
+You can now monitor and automatically react to changes in your AWS CodeDeploy deployments using Amazon CloudWatch alarms. Amazon CloudWatch is a monitoring service for AWS cloud resources and the applications you run on AWS. Using CloudWatch with CodeDeploy, you can monitor metrics for Amazon EC2 instances or Auto Scaling groups being managed by CodeDeploy and then invoke an action if the metric you are tracking crosses a certain threshold for a defined period of time. You can monitor metrics such as instance CPU utilization. If the alarm is activated, CloudWatch initiates actions such as sending a notification to Amazon Simple Notification Service, stopping a CodeDeploy deployment, or changing the state of an instance (e.g. reboot, terminate, recover).
+
+CodeDeploy now also lets you automatically roll back a deployment when a deployment fails or when a CloudWatch alarm is activated. CodeDeploy will redeploy the last known working version of the application when it rolls back. Previously, you needed to manually initiate a deployment if you wanted to roll back a deployment. You can configure automatic rollback settings when creating a new deployment or by updating an existing deployment. Learn more about this feature in our documentation.
 
 ## AWS S3 
 
