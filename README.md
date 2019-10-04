@@ -1,4 +1,7 @@
 # aws-cert-dva-c01
+
+A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non-essentials.
+
 <!-- vim-markdown-toc GFM -->
 
 * [AWS IAM](#aws-iam)
