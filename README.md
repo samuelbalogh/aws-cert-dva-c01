@@ -207,6 +207,16 @@ A VPC endpoint enables you to privately connect your VPC to supported AWS servic
 
 Endpoints are virtual devices. They are horizontally scaled, redundant, and highly available VPC components that allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic.
 
+### Flow logs
+
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3. After you've created a flow log, you can retrieve and view its data in the chosen destination.
+
+Flow logs can help you with a number of tasks, such as:
+
+- Diagnosing overly restrictive security group rules
+- Monitoring the traffic that is reaching your instance
+- Determining the direction of the traffic to and from the network interfaces
+
 ## AWS DNS
 
 [Link to AWS](https://aws.amazon.com/route53/)
@@ -253,6 +263,8 @@ Multi-Volume Snapshots
 Snapshots can be used to create a backup of critical workloads, such as a large database or a file system that spans across multiple EBS volumes. Multi-volume snapshots allow you to take exact point-in-time, data coordinated, and crash-consistent snapshots across multiple EBS volumes attached to an EC2 instance. You
 
 ## AWS RDS
+
+> TODO: read replicas
 
 [Link to AWS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
 
