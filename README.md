@@ -10,16 +10,16 @@
 * [AWS DNS](#aws-dns)
 * [AWS Elastic IP](#aws-elastic-ip)
 * [AWS EBS](#aws-ebs)
+* [AWS EFS](#aws-efs)
 * [AWS RDS](#aws-rds)
 * [AWS CodeDeploy](#aws-codedeploy)
 * [AWS S3](#aws-s3)
 * [AWS Cognito](#aws-cognito)
-* [Kinesis](#kinesis)
+* [AWS Kinesis](#aws-kinesis)
 * [AWS DynamoDB](#aws-dynamodb)
 * [AWS System Parameter Store](#aws-system-parameter-store)
 * [API Gateway](#api-gateway)
 * [AWS KMS](#aws-kms)
-* [AWS EFS](#aws-efs)
 * [AWS Lambda](#aws-lambda)
 * [AWS Step Functions](#aws-step-functions)
 * [AWS Secrets Manager](#aws-secrets-manager)
@@ -270,7 +270,13 @@ You can back up the data on your Amazon EBS volumes to Amazon S3 by taking point
 
 Multi-Volume Snapshots
 
-Snapshots can be used to create a backup of critical workloads, such as a large database or a file system that spans across multiple EBS volumes. Multi-volume snapshots allow you to take exact point-in-time, data coordinated, and crash-consistent snapshots across multiple EBS volumes attached to an EC2 instance. You
+Snapshots can be used to create a backup of critical workloads, such as a large database or a file system that spans across multiple EBS volumes. Multi-volume snapshots allow you to take exact point-in-time, data coordinated, and crash-consistent snapshots across multiple EBS volumes attached to an EC2 instance. 
+
+## AWS EFS
+
+EFS provides shared access to fully managed file systems across-the-board. Connecting to EFS is similar to connecting to your network drive since it supports NFS protocols, which are standard for network attached storage (NAS) devices. As a result, you can connect to it through your network interface.
+
+https://n2ws.com/blog/ebs-snapshot/aws-fast-storage-efs-vs-ebs
 
 ## AWS RDS
 
@@ -531,7 +537,7 @@ You might want to use Transfer Acceleration on a bucket for various reasons, inc
 
 Amazon Cognito Streams gives developers control and insight into their data stored in Amazon Cognito. Developers can now configure a Kinesis stream to receive events as data is updated and synchronized. Amazon Cognito can push each dataset change to a Kinesis stream you own in real time.
 
-## Kinesis 
+## AWS Kinesis 
 
 ### Stream
 
@@ -729,13 +735,6 @@ A stage is a named reference to a deployment, which is a snapshot of the API. Yo
 
 ### generate-data-key-without-plaintext
 Generates a unique data key. This operation returns a data key that is encrypted under a customer master key (CMK) that you specify. GenerateDataKeyWithoutPlaintext is identical to GenerateDataKey except that returns only the encrypted copy of the data key.
-
-
-## AWS EFS
-
-EFS provides shared access to fully managed file systems across-the-board. Connecting to EFS is similar to connecting to your network drive since it supports NFS protocols, which are standard for network attached storage (NAS) devices. As a result, you can connect to it through your network interface.
-
-https://n2ws.com/blog/ebs-snapshot/aws-fast-storage-efs-vs-ebs
 
 
 
