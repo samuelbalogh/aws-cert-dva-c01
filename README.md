@@ -32,6 +32,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [AWS X-ray](#aws-x-ray)
 * [AWS Quicksight](#aws-quicksight)
 * [AWS Batch](#aws-batch)
+* [AWS SQS](#aws-sqs)
 * [AWS SNS](#aws-sns)
 * [AWS CloudWatch](#aws-cloudwatch)
 * [AWS CodePipeline](#aws-codepipeline)
@@ -716,6 +717,10 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-clou
 
 ## ElastiCache
 
+Amazon ElastiCache offers fully managed Redis and Memcached, so you can seamlessly deploy, run, and scale popular open source compatible in-memory data stores, and build data-intensive apps or improve the performance of your existing apps by retrieving data from high throughput and low latency in-memory data stores.
+
+Amazon ElastiCache can be used to significantly improve latency and throughput for many read-heavy application workloads (such as social networking, gaming, media sharing and Q&A portals) or compute-intensive workloads (such as a recommendation engine) by allowing you to store the objects that are often read in cache. Moreover, with Redis’s support for advanced data structures, you can augment the database tier to provide features (such as leaderboard, counting, session and tracking) that are not easily achievable via databases in a cost-effective way.,
+
 ### Redis vs. Memcached
 
 ![redis-vs-memcached.png](img/redis-vs-memcached.png)
@@ -930,6 +935,71 @@ AWS Batch enables developers, scientists, and engineers to easily and efficientl
 You can use the AWS Batch event stream for CloudWatch Events to receive near real-time notifications regarding the current state of jobs that have been submitted to your job queues.
 
 Using CloudWatch Events, you can monitor the progress of jobs, build AWS Batch custom workflows with complex dependencies, generate usage reports or metrics around job execution, or build your own custom dashboards. With AWS Batch and CloudWatch Events, you can eliminate scheduling and monitoring code that continuously polls AWS Batch for job status changes. Instead, handle AWS Batch job state changes asynchronously using any CloudWatch Events target, such as AWS Lambda, Amazon Simple Queue Service, Amazon Simple Notification Service, or Amazon Kinesis Data Streams. 
+
+## AWS SQS
+
+Amazon Simple Queue Service (Amazon SQS) offers a secure, durable, and available hosted queue that lets you integrate and decouple distributed software systems and components. Amazon SQS offers common constructs such as dead-letter queues and cost allocation tags. It provides a generic web services API and it can be accessed by any programming language that the AWS SDK supports.
+
+### At least once delivery (standard queues)
+
+Amazon SQS stores copies of your messages on multiple servers for redundancy and high availability. On rare occasions, one of the servers that stores a copy of a message might be unavailable when you receive or delete a message.
+
+If this occurs, the copy of the message isn't deleted on that unavailable server, and you might get that message copy again when you receive messages. Design your applications to be idempotent (they should not be affected adversely when processing the same message more than once).
+
+### Message ordering
+
+A standard queue makes a best effort to preserve the order of messages, but more than one copy of a message might be delivered out of order. If your system requires that order be preserved, we recommend using a FIFO (First-In-First-Out) queue or adding sequencing information in each message so you can reorder the messages when they're received.
+
+### Message attriubtes
+
+Amazon SQS lets you include structured metadata (such as timestamps, geospatial data, signatures, and identifiers) with messages using message attributes. Each message can have up to 10 attributes. Message attributes are optional and separate from the message body (however, they are sent alongside it). Your consumer can use message attributes to handle a message in a particular way without having to process the message body first.
+
+### Visibility timeout
+
+When a consumer receives and processes a message from a queue, the message remains in the queue. Amazon SQS doesn't automatically delete the message. Because Amazon SQS is a distributed system, there's no guarantee that the consumer actually receives the message (for example, due to a connectivity issue, or due to an issue in the consumer application). Thus, the consumer must delete the message from the queue after receiving and processing it.
+
+Immediately after a message is received, it remains in the queue. To prevent other consumers from processing the message again, Amazon SQS sets a visibility timeout, a period of time during which Amazon SQS prevents other consumers from receiving and processing the message. i
+
+- The default visibility timeout for a message is 30 seconds.
+- The minimum is 0 seconds. 
+- The maximum is 12 hours. 
+
+### Duplicate messages
+
+**FIFO queues** are designed to never introduce duplicate messages. However, your message producer might introduce duplicates in certain scenarios: for example, if the producer sends a message, does not receive a response, and then resends the same message. Amazon SQS APIs provide deduplication functionality that prevents your message producer from sending duplicates. Any duplicates introduced by the message producer are removed within a 5-minute deduplication interval.
+
+For **standard queues**, you might occasionally receive a duplicate copy of a message (at-least-once delivery). If you use a standard queue, you must design your applications to be idempotent (that is, they must not be affected adversely when processing the same message more than once).
+
+### Cost allocation tags
+
+To organize and identify your Amazon SQS queues for cost allocation, you can add metadata tags that identify a queue's purpose, owner, or environment. —this is especially useful when you have many queues.
+
+### Limits
+
+- Delay queue: the default (minimum) delay for a queue is 0 seconds. The maximum is 15 minutes.
+- Listed queues: 1000 per ListQueues request
+- Messages per queue (backlog): The number of messages that an Amazon SQS queue can store is unlimited.
+- Messages per queue (in flight): 
+  - Standard queue: 120,000 inflight messages (received from a queue by a consumer, but not yet deleted from the queue)
+  - FIFO queue: 20,000 inflight messages
+- Message attributes: A message can contain up to 10 metadata attributes.
+- Messages per batch: A single message batch request can include a maximum of 10 messages. 
+- Message retention: 
+  - By default, a message is retained for 4 days. 
+  - The minimum is 60 seconds (1 minute). 
+  - The maximum is 1,209,600 seconds (14 days).
+- Message throughput: 
+  - Standard queues support a nearly unlimited number of transactions per second (TPS) per API action.
+  - FIFO queues support up to 3,000 messages per second, per API action with batching. 
+  - FIFO queues support up to 300 messages per second, per API action without batching.
+- Message size
+  - The minimum message size is 1 byte (1 character). 
+  - The maximum is 262,144 bytes (256 KB).
+- Message visibility timeout
+  - The default visibility timeout for a message is 30 seconds.
+  - The minimum is 0 seconds. 
+  - The maximum is 12 hours. 
+  
 
 
 ## AWS SNS
