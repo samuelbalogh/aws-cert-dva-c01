@@ -142,6 +142,26 @@ Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-perform
 
 Docker encourages you to split your applications up into their individual components, and Elastic Container Service is optimized for this pattern. Tasks allow you to define a set of containers that you would like to be placed together (or part of the same placement decision), their properties, and how they may be linked. Tasks include all the information that Amazon ECS needs to make the placement decision. To launch a single container, your Task Definition should only include one container definition.
 
+### Task Placement
+
+#### Task Placement Strategies
+
+> TODO cleanup
+
+A task placement strategy is an algorithm for selecting instances for task placement or tasks for termination. Task placement strategies can be specified when either running a task or creating a new service. For more information, see Amazon ECS Task Placement.
+
+Strategy Types
+Amazon ECS supports the following task placement strategies:
+
+binpack
+Place tasks based on the least available amount of CPU or memory. This minimizes the number of instances in use.
+
+random
+Place tasks randomly.
+
+spread
+Place tasks evenly based on the specified value. Accepted values are instanceId (or host, which has the same effect), or any platform or custom attribute that is applied to a container instance, such as attribute:ecs.availability-zone. Service tasks are spread based on the tasks from that service. Standalone tasks are spread based on the tasks from the same task group.
+
 ## AWS ECR
 
 Amazon Elastic Container Registry (Amazon ECR) is a managed AWS Docker registry service that is secure, scalable, and reliable. Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that specific users or Amazon EC2 instances can access repositories and images. Developers can use the Docker CLI to push, pull, and manage images.
@@ -548,6 +568,17 @@ You might want to use Transfer Acceleration on a bucket for various reasons, inc
 
 ## AWS Cognito 
 
+### User pools & Identity pools
+
+- *User pools* are for authentication (identify verification). With a user pool, your app users can sign in through the user pool or federate through a third-party identity provider (IdP). Use a user pool when you need to:
+  - Design sign-up and sign-in webpages for your app.
+  - Access and manage user data.
+  - Track user device, location, and IP address, and adapt to sign-in requests of different risk levels.
+  - Use a custom authentication flow for your app.
+- *Identity pools* are for authorization (access control). You can use identity pools to create unique identities for users and give them access other AWS services. Use an identity pool when you need to:
+  - Give your users access to AWS resources, such as an Amazon Simple Storage Service (Amazon S3) bucket or an Amazon DynamoDB table.
+  - Generate temporary AWS credentials for unauthenticated users.
+
 ### Streams
 
 Amazon Cognito Streams gives developers control and insight into their data stored in Amazon Cognito. Developers can now configure a Kinesis stream to receive events as data is updated and synchronized. Amazon Cognito can push each dataset change to a Kinesis stream you own in real time.
@@ -562,27 +593,27 @@ Amazon Cognito Streams gives developers control and insight into their data stor
 
 #### Terminology
 
-*Kinesis Data Stream*
+**Kinesis Data Stream**
 
 A Kinesis data stream is a set of shards. Each shard has a sequence of data records. Each data record has a sequence number that is assigned by Kinesis Data Streams.
 
-*Data Record*
+**Data Record**
 
 A data record is the unit of data stored in a Kinesis data stream. Data records are composed of a sequence number, a partition key, and a data blob, which is an immutable sequence of bytes. Kinesis Data Streams does not inspect, interpret, or change the data in the blob in any way. A data blob can be up to 1 MB.
 
-*Retention Period*
+**Retention Period**
 
 The retention period is the length of time that data records are accessible after they are added to the stream. A stream’s retention period is set to a default of 24 hours after creation. You can increase the retention period up to 168 hours (7 days) using the IncreaseStreamRetentionPeriod operation, and decrease the retention period down to a minimum of 24 hours using the DecreaseStreamRetentionPeriod operation. Additional charges apply for streams with a retention period set to more than 24 hours. 
 
-*Producer* 
+**Producer**
 
 Producers put records into Amazon Kinesis Data Streams. For example, a web server sending log data to a stream is a producer.
 
-*Consumer*
+**Consumer**
   
 Consumers get records from Amazon Kinesis Data Streams and process them. These consumers are known as Amazon Kinesis Data Streams Application.
 
-*Amazon Kinesis Data Streams Application*
+**Amazon Kinesis Data Streams Application**
 
 An Amazon Kinesis Data Streams application is a consumer of a stream that commonly runs on a fleet of EC2 instances.
 
@@ -590,36 +621,43 @@ There are two types of consumers that you can develop: shared fan-out consumers 
 
 The output of a Kinesis Data Streams application can be input for another stream, enabling you to create complex topologies that process data in real time. An application can also send data to a variety of other AWS services. There can be multiple applications for one stream, and each application can consume data from the stream independently and concurrently.
 
-*Shard*
+**Shard**
 
 A shard is a uniquely identified sequence of data records in a stream. A stream is composed of one or more shards, each of which provides a fixed unit of capacity. Each shard can support up to 5 transactions per second for reads, up to a maximum total data read rate of 2 MB per second and up to 1,000 records per second for writes, up to a maximum total data write rate of 1 MB per second (including partition keys). The data capacity of your stream is a function of the number of shards that you specify for the stream. The total capacity of the stream is the sum of the capacities of its shards.
 
 If your data rate increases, you can increase or decrease the number of shards allocated to your stream.
 
-*Partition Key*
+**Partition Key**
 
 A partition key is used to group data by shard within a stream. Kinesis Data Streams segregates the data records belonging to a stream into multiple shards. It uses the partition key that is associated with each data record to determine which shard a given data record belongs to. Partition keys are Unicode strings with a maximum length limit of 256 bytes. An MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards. When an application puts data into a stream, it must specify a partition key.
 
-*Sequence Number*
+**Sequence Number**
 
 Each data record has a sequence number that is unique per partition-key within its shard. Kinesis Data Streams assigns the sequence number after you write to the stream with client.putRecords or client.putRecord. Sequence numbers for the same partition key generally increase over time. The longer the time period between write requests, the larger the sequence numbers become.
 
 Note  
 Sequence numbers cannot be used as indexes to sets of data within the same stream. To logically separate sets of data, use partition keys or create a separate stream for each dataset.
 
-*Kinesis Client Library* 
+**Kinesis Client Library**
 
 The Kinesis Client Library is compiled into your application to enable fault-tolerant consumption of data from the stream. The Kinesis Client Library ensures that for every shard there is a record processor running and processing that shard. The library also simplifies reading data from the stream. The Kinesis Client Library uses an Amazon DynamoDB table to store control data. It creates one table per application that is processing data.
 
 There are two major versions of the Kinesis Client Library. Which one you use depends on the type of consumer you want to create. 
 
-*Application Name*
+**Application Name**
 
 The name of an Amazon Kinesis Data Streams application identifies the application. Each of your applications must have a unique name that is scoped to the AWS account and Region used by the application. This name is used as a name for the control table in Amazon DynamoDB and the namespace for Amazon CloudWatch metrics.
 
-*Server-Side Encryption*
+**Server-Side Encryption**
 
 Amazon Kinesis Data Streams can automatically encrypt sensitive data as a producer enters it into a stream. Kinesis Data Streams uses AWS KMS master keys for encryption. 
+
+
+### Resharding
+
+Resharding enables you to increase or decrease the number of shards in a stream in order to adapt to changes in the rate of data flowing through the stream. Resharding is typically performed by an administrative application that monitors shard data-handling metrics.
+
+Typically, when you use the KCL, you should ensure that the number of instances does not exceed the number of shards (except for failure standby purposes)
 
 
 #### Enhanced fan-out
@@ -640,7 +678,22 @@ When you send data from your data producers to your data stream, Kinesis Data St
 
 ## AWS DynamoDB 
 
-### Local seconday indexes
+Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.
+
+### Primary keys
+
+DynamoDB supports two different kinds of primary keys:
+
+- **Partition key**:  A simple primary key, composed of one attribute known as the partition key. DynamoDB uses the partition key's value as input to an internal hash function. The output from the hash function determines the partition (physical storage internal to DynamoDB) in which the item will be stored.
+- **Partition key and sort key**: Referred to as a composite primary key, this type of key is composed of two attributes. The first attribute is the partition key, and the second attribute is the sort key. DynamoDB uses the partition key value as input to an internal hash function. The output from the hash function determines the partition (physical storage internal to DynamoDB) in which the item will be stored. All items with the same partition key value are stored together, in sorted order by sort key value. In a table that has a partition key and a sort key, it's possible for two items to have the same partition key value. However, those two items must have different sort key values.
+
+In a table that has only a partition key, no two items can have the same partition key value.
+
+### Secondary indexes
+
+You can create one or more secondary indexes on a table. A secondary index lets you query the data in the table using an alternate key, in addition to queries against the primary key.
+
+#### Local seconday indexes
 
 To give your application a choice of sort keys, you can create one or more local secondary indexes on an Amazon DynamoDB table and issue Query or Scan requests against these indexes.
 
@@ -648,7 +701,7 @@ A local secondary index maintains an alternate sort key for a given partition ke
 
 A local secondary index lets you query over a single partition, as specified by the hash key value in the query. A **global secondary** index lets you query over the entire table, across all partitions.
 
-### Global secondary index 
+#### Global secondary index 
 
 An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered "global" because queries on the index can span all of the data in the base table, across all partitions. A global secondary index has no size limitations and has its own provisioned throughput settings for read and write activity that are separate from those of the table.
 
@@ -667,6 +720,15 @@ One write request unit represents one write for an item up to 1 KB in size. If y
 ### Streams
 
 When enabled, DynamoDB Streams captures a time-ordered sequence of item-level modifications in a DynamoDB table and durably stores the information for up to 24 hours. Applications can access a series of stream records, which contain an item change, from a DynamoDB stream in near real time.
+
+#### Stream view types
+
+Represents the DynamoDB Streams configuration for a table in DynamoDB. When an item in the table is modified, `StreamViewType` determines what information is written to the stream for this table. Valid values for StreamViewType are:
+
+- `KEYS_ONLY` - Only the key attributes of the modified item are written to the stream.
+- `NEW_IMAGE` - The entire item, as it appears after it was modified, is written to the stream.
+- `OLD_IMAGE` - The entire item, as it appeared before it was modified, is written to the stream.
+- `NEW_AND_OLD_IMAGES` - Both the new and the old item images of the item are written to the stream.
 
 ### DynamoDB Streams and AWS Lambda Triggers
 
@@ -698,6 +760,10 @@ Operation Speed: Query operation is expected to be very fast and only marginally
 Read Unit Cost: For a query operation the read units consumed depend on the total size of all the items returned. If for example, a query operation returns 20 items with a total size of 20.1K, the read units consumed would be 21 (assuming that the operation finishes within a second). Since the scan operation is performed by going through each item in the table, for any reasonably sized table the scan operation will consume all the read units until the operation finishes. Looking at it another way, the total time required for the scan operation to complete can be approximated as at least: T = S / (R * 2), where S is the total size of the table in kilobytes and R is the read units provisioned for a table. The reads for scan are eventually consistent and consume half the read units compared to consistent reads. For a 1GB table with a provisioning of 100 read units, it would take approximately 84 minutes. Note that one scan operation wouldn't last 84 minutes because DynamoDB will only evaluate 1MB worth of data before filtering and returning the results. The entire table scan would therefore require 1000 scan operations.
 
 Operation Overhead: Since a scan operation can consume all read units, it can slow down other operations by starving them.
+
+### TTL
+
+Time to Live (TTL) for Amazon DynamoDB lets you define when items in a table expire so that they can be automatically deleted from the database. TTL is provided at no extra cost as a way to reduce storage usage and reduce the cost of storing irrelevant data without using provisioned throughput. With TTL enabled on a table, you can set a timestamp for deletion on a per-item basis, allowing you to limit storage usage to only those records that are relevant.,
 
 ### DAX
 
@@ -760,10 +826,46 @@ The following mechanisms can be used for tracking and limiting the access that y
 Usage plans let you provide API keys to your customers — and then track and limit usage of your API stages and methods for each API key. 
 https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html
 
+### Integration Types
+
+> TODO: clear this up (formatting)
+
+The following list summarizes the supported integration types:
+
+AWS: This type of integration lets an API expose AWS service actions. In AWS integration, you must configure both the integration request and integration response and set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
+
+AWS_PROXY: This type of integration lets an API method be integrated with the Lambda function invocation action with a flexible, versatile, and streamlined integration setup. This integration relies on direct interactions between the client and the integrated Lambda function. With this type of integration, also known as the Lambda proxy integration, you do not set the integration request or the integration response. API Gateway passes the incoming request from the client as the input to the backend Lambda function. The integrated Lambda function takes the input of this format and parses the input from all available sources, including request headers, URL path variables, query string parameters, and applicable body. The function returns the result following this output format. This is the preferred integration type to call a Lambda function through API Gateway and is not applicable to any other AWS service actions, including Lambda actions other than the function-invoking action.
+
+HTTP: This type of integration lets an API expose HTTP endpoints in the backend. With the HTTP integration, also known as the HTTP custom integration, you must configure both the integration request and integration response. You must set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
+
+HTTP_PROXY: The HTTP proxy integration allows a client to access the backend HTTP endpoints with a streamlined integration setup on single API method. You do not set the integration request or the integration response. API Gateway passes the incoming request from the client to the HTTP endpoint and passes the outgoing response from the HTTP endpoint to the client.
+
+MOCK: This type of integration lets API Gateway return a response without sending the request further to the backend. This is useful for API testing because it can be used to test the integration set up without incurring charges for using the backend and to enable collaborative development of an API. In collaborative development, a team can isolate their development effort by setting up simulations of API components owned by other teams by using the MOCK integrations. It is also used to return CORS-related headers to ensure that the API method permits CORS access. In fact, the API Gateway console integrates the OPTIONS method to support CORS with a mock integration. Gateway responses are other examples of mock integrations.
+
 ### Stage
 
 Set up a Stage in API Gateway
 A stage is a named reference to a deployment, which is a snapshot of the API. You use a Stage to manage and optimize a particular deployment. For example, you can set up stage settings to enable caching, customize request throttling, configure logging, define stage variables or attach a canary release for testing.
+
+
+### Caching
+
+> TODO summarize caching
+
+https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html
+
+
+### Monitoring with CloudWatch
+
+The metrics reported by API Gateway provide information that you can analyze in different ways. The list below shows some common uses for the metrics. 
+
+- Monitor the `IntegrationLatency` metrics to measure the responsiveness of the backend.
+- Monitor the `Latency` metrics to measure the overall responsiveness of your API calls.
+- Monitor the `CacheHitCount` and CacheMissCount metrics to optimize cache capacities to achieve a desired performance.
+
+### Limits
+
+- Timeout: 50 milliseconds - 29 seconds for all integration types, including Lambda, Lambda proxy, HTTP, HTTP proxy, and AWS integrations.
 
 
 ## AWS KMS 
@@ -790,6 +892,25 @@ A deployment package is a ZIP archive that contains your function code and depen
 You can configure your Lambda function to pull in additional code and content in the form of layers. A layer is a ZIP archive that contains libraries, a custom runtime, or other dependencies. With layers, you can use libraries in your function without needing to include them in your deployment package.
 
 Layers let you keep your deployment package small, which makes development easier. You can avoid errors that can occur when you install and package dependencies with your function code. For Node.js, Python, and Ruby functions, you can develop your function code in the Lambda console as long as you keep your deployment package under 3 MB.
+
+
+### Invoking Lambda functions
+
+You can invoke Lambda functions directly with the Lambda console, the Lambda API, the AWS SDK, the AWS CLI, and AWS toolkits. You can also configure other AWS services to invoke your function, or configure Lambda to read from a stream or queue and invoke your function.
+
+When you invoke a function, you can choose to invoke it synchronously or asynchronously. With synchronous invocation, you wait for the function to process the event and return a response. With asynchronous invocation, Lambda queues the event for processing and returns a response immediately. For asynchronous invocation, Lambda handles retries and can send failed events to a dead-letter queue.
+
+To process items from a stream or queue, you can create an *event source mapping*. An event source mapping is a resource in Lambda that reads items from an Amazon Simple Queue Service queue, an Amazon Kinesis stream, or a Amazon DynamoDB stream, and sends them to your function in batches.
+
+Other AWS services and resources invoke your function directly. For example, you can configure CloudWatch Events to invoke your function on a timer, or Amazon S3 to invoke your function when an object is created.
+
+When you use AWS services as a trigger, the invocation type is predetermined for each service. You have no control over the invocation type that these event sources use when they invoke your Lambda function.
+
+In the Invoke API, you have 3 options to choose from for the InvocationType:
+
+- **RequestResponse** (default) - Invoke the function synchronously. Keep the connection open until the function returns a response or times out. The API response includes the function response and additional data.
+- **Event** - Invoke the function asynchronously. Send events that fail multiple times to the function's dead-letter queue (if it's configured). The API response only includes a status code.
+- **DryRun** - Validate parameter values and verify that the user or role has permission to invoke the function.
 
 ### Misc
 
@@ -822,7 +943,7 @@ You can insert logging statements into your code to help you validate that your 
 
 ### Traffic Shifting Using Aliases
 
-By default, an alias points to a single Lambda function version. When the alias is updated to point to a different function version, incoming request traffic in turn instantly points to the updated version. This exposes that alias to any potential instabilities introduced by the new version. To minimize this impact, you can implement the routing-config parameter of the Lambda alias that allows you to point to two different versions of the Lambda function and dictate what percentage of incoming traffic is sent to each version.
+By default, an alias points to a single Lambda function version. When the alias is updated to point to a different function version, incoming request traffic in turn instantly points to the updated version. This exposes that alias to any potential instabilities introduced by the new version. To minimize this impact, you can implement the `routing-config` parameter of the Lambda alias that allows you to point to two different versions of the Lambda function and dictate what percentage of incoming traffic is sent to each version.
 
 ```
 aws lambda create-alias --name alias name --function-name function-name \ --function-version 1
@@ -865,12 +986,22 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/s
 
 ## AWS Step Functions
 
+
+AWS Step Functions is a web service that enables you to coordinate the components of distributed applications and microservices using visual workflows. You build applications from individual components that each perform a discrete function, or task, allowing you to scale and change applications quickly.
+
+### Large payloads
+
 Executions that pass large payloads of data between states can be terminated. If the data you are passing between states might grow to over 32 KB, use Amazon Simple Storage Service (Amazon S3) to store the data, and pass the Amazon Resource Name (ARN) instead of the raw data. Alternatively, adjust your implementation so that you pass smaller payloads in your executions.
 
 
 ## AWS Secrets Manager
 
 AWS Secrets Manager helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. Secrets Manager offers secret rotation with built-in integration for Amazon RDS, Amazon Redshift, and Amazon DocumentDB
+
+### Secret rotation
+
+You can configure AWS Secrets Manager to automatically rotate the secret for a secured service or database. Secrets Manager already natively knows how to rotate secrets for supported Amazon RDS databases. 
+
 
 ## AWS Data Pipeline
 
@@ -1039,12 +1170,41 @@ To organize and identify your Amazon SQS queues for cost allocation, you can add
 
 ## AWS SNS
 
+Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+
+When using Amazon SNS, you (as the owner) create a topic and control access to it by defining policies that determine which publishers and subscribers can communicate with the topic. A publisher sends messages to topics that they have created or to topics they have permission to publish to. Instead of including a specific destination address in each message, a publisher sends a message to the topic. Amazon SNS matches the topic to a list of subscribers who have subscribed to that topic, and delivers the message to each of those subscribers. Each topic has a unique name that identifies the Amazon SNS endpoint for publishers to post messages and subscribers to register for notifications. Subscribers receive all messages published to the topics to which they subscribe, and all subscribers to a topic receive the same messages.
+
+![sns-how-works.png](img/sns-how-works.png)
+
+### System-to-sytem messaging
+
+### Lambda
+
+Amazon SNS and AWS Lambda are integrated so you can invoke Lambda functions with Amazon SNS notifications. When a message is published to an SNS topic that has a Lambda function subscribed to it, the Lambda function is invoked with the payload of the published message. The Lambda function receives the message payload as an input parameter and can manipulate the information in the message, publish the message to other SNS topics, or send the message to other AWS services.
+
+#### SQS
+
+When you subscribe an Amazon SQS queue to an Amazon SNS topic, you can publish a message to the topic and Amazon SNS sends an Amazon SQS message to the subscribed queue. The Amazon SQS message contains the subject and message that were published to the topic along with metadata about the message in a JSON document. 
+
+#### HTTP
+
+You can use Amazon SNS to send notification messages to one or more HTTP or HTTPS endpoints. When you subscribe an endpoint to a topic, you can publish a notification to the topic and Amazon SNS sends an HTTP POST request delivering the contents of the notification to the subscribed endpoint.
 
 ### Amazon SNS Message Filtering
 
 By default, an Amazon SNS topic subscriber receives every message published to the topic. To receive a subset of the messages, a subscriber must assign a filter policy to the topic subscription.
 
 A filter policy is a simple JSON object containing attributes that define which messages the subscriber receives. When you publish a message to a topic, Amazon SNS compares the message attributes to the attributes in the filter policy for each of the topic's subscriptions. If any of the attributes match, Amazon SNS sends the message to the subscriber. Otherwise, Amazon SNS skips the subscriber without sending the message. If a subscription doesn't have a filter policy, the subscription receives every message published to its topic. 
+
+### Use cases
+
+#### Fanout
+
+The "fanout" scenario is when an Amazon SNS message is sent to a topic and then replicated and pushed to multiple Amazon SQS queues, HTTP endpoints, or email addresses. This allows for parallel asynchronous processing. For example, you could develop an application that sends an Amazon SNS message to a topic whenever an order is placed for a product. Then, the Amazon SQS queues that are subscribed to that topic would receive identical notifications for the new order. The Amazon EC2 server instance attached to one of the queues could handle the processing or fulfillment of the order while the other server instance could be attached to a data warehouse for analysis of all orders received.
+
+#### Application and System Alerts
+
+Application and system alerts are notifications, triggered by predefined thresholds, sent to specified users by SMS and/or email. For example, since many AWS services use Amazon SNS, you can receive immediate notification when an event occurs, such as a specific change to your Amazon EC2 Auto Scaling group.
 
 ## AWS CloudWatch
 
