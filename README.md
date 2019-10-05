@@ -9,6 +9,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [Elastic Beanstalk](#elastic-beanstalk)
 * [AWS ECS](#aws-ecs)
 * [AWS ECR](#aws-ecr)
+* [X-Ray on ECS](#x-ray-on-ecs)
 * [AWS EC2](#aws-ec2)
 * [VPC](#vpc)
 * [AWS DNS](#aws-dns)
@@ -151,6 +152,11 @@ The **Fargate launch type** allows you to run your containerized applications wi
 ### Task Placement
 
 When a task that uses the EC2 launch type is launched, Amazon ECS must determine where to place the task based on the requirements specified in the task definition, such as CPU and memory. Similarly, when you scale down the task count, Amazon ECS must determine which tasks to terminate. You can apply task placement strategies and constraints to customize how Amazon ECS places and terminates tasks. 
+
+### Task Groups
+
+You can identify a set of related tasks as a task group. All tasks with the same task group name are considered as a set when performing spread placement. For example, suppose that you are running different applications in one cluster, such as databases and web servers. To ensure that your databases are balanced across Availability Zones, add them to a task group named "databases" and then use this task group as a constraint for task placement.
+
 #### Task Placement Strategies
 
 A **task placement strategy** is an algorithm for selecting instances for task placement or tasks for termination. Task placement strategies can be specified when either running a task or creating a new service.
@@ -165,6 +171,12 @@ Amazon ECS supports the following task placement strategies:
 ## AWS ECR
 
 Amazon Elastic Container Registry (Amazon ECR) is a managed AWS Docker registry service that is secure, scalable, and reliable. Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that specific users or Amazon EC2 instances can access repositories and images. Developers can use the Docker CLI to push, pull, and manage images.
+
+## X-Ray on ECS
+
+### Running the X-Ray daemon on Amazon ECS
+
+In Amazon ECS, create a Docker image that runs the X-Ray daemon, upload it to a Docker image repository, and then deploy it to your Amazon ECS cluster. You can use port mappings and network mode settings in your task definition file to allow your application to communicate with the daemon container.
 
 ## AWS EC2
 
@@ -566,6 +578,17 @@ You might want to use Transfer Acceleration on a bucket for various reasons, inc
 - You have customers that upload to a centralized bucket from all over the world.
 - You transfer gigabytes to terabytes of data on a regular basis across continents.
 - You are unable to utilize all of your available bandwidth over the Internet when uploading to Amazon S3.
+
+
+### SSE-C (Server-side encryption with customer provided key),
+
+When using server-side encryption with customer-provided encryption keys (SSE-C), you must provide encryption key information using the following request headers.
+
+- `x-amz-server-side-encryption-customer-algorithm` - Use this header to specify the encryption algorithm. The header value must be "AES256".
+
+- `x-amz-server-side-encryption-customer-key` - Use this header to provide the 256-bit, base64-encoded encryption key for Amazon S3 to use to encrypt or decrypt your data.
+
+- `x-amz-server-side-encryption-customer-key-MD5` - Use this header to provide the base64-encoded 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
 
 ## AWS Cognito 
