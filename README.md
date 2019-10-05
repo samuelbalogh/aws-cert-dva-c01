@@ -8,6 +8,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [AWS Cloudformation](#aws-cloudformation)
 * [Elastic Beanstalk](#elastic-beanstalk)
 * [AWS ECS](#aws-ecs)
+* [AWS ECR](#aws-ecr)
 * [AWS EC2](#aws-ec2)
 * [VPC](#vpc)
 * [AWS DNS](#aws-dns)
@@ -20,6 +21,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [AWS Cognito](#aws-cognito)
 * [AWS Kinesis](#aws-kinesis)
 * [AWS DynamoDB](#aws-dynamodb)
+* [ElastiCache](#elasticache)
 * [AWS System Parameter Store](#aws-system-parameter-store)
 * [API Gateway](#api-gateway)
 * [AWS KMS](#aws-kms)
@@ -40,7 +42,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 
 [Link to AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
 
-![intro-diagram-policies-800.png](intro-diagram-policies-800.png)
+![intro-diagram-policies-800.png](img/intro-diagram-policies-800.png)
 
 ### IAM Users
 
@@ -55,6 +57,11 @@ An IAM group is a collection of IAM users. You can use groups to specify permiss
 An IAM role is very similar to a user, in that it is an identity with permission policies that determine what the identity can and cannot do in AWS. However, a role does not have any credentials (password or access keys) associated with it. Instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it.
 
 A role can be assigned to a federated user who signs in by using an external identity provider instead of IAM. AWS uses details passed by the identity provider to determine which role is mapped to the federated user.
+
+### Policies and Permissions 
+
+You manage access in AWS by creating policies and attaching them to IAM identities (users, groups of users, or roles) or AWS resources. A policy is an object in AWS that, when associated with an identity or resource, defines their permissions. AWS evaluates these policies when a principal entity (user or role) makes a request. Permissions in the policies determine whether the request is allowed or denied. Most policies are stored in AWS as JSON documents. AWS supports six types of policies: identity-based policies, resource-based policies, permissions boundaries, Organizations SCPs, ACLs, and session policies.
+
 
 ### Temporary credentials
 
@@ -122,7 +129,7 @@ Elastic Beanstalk creates an application version whenever you upload source code
 
 ### Deployments 
 
-![beanstalk-deployment-methods.png](beanstalk-deployment-methods.png)
+![beanstalk-deployment-methods.png](img/beanstalk-deployment-methods.png)
 
 ## AWS ECS
 
@@ -133,6 +140,10 @@ Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-perform
 ### I want to launch containers. Why do I have to launch Tasks?
 
 Docker encourages you to split your applications up into their individual components, and Elastic Container Service is optimized for this pattern. Tasks allow you to define a set of containers that you would like to be placed together (or part of the same placement decision), their properties, and how they may be linked. Tasks include all the information that Amazon ECS needs to make the placement decision. To launch a single container, your Task Definition should only include one container definition.
+
+## AWS ECR
+
+Amazon Elastic Container Registry (Amazon ECR) is a managed AWS Docker registry service that is secure, scalable, and reliable. Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that specific users or Amazon EC2 instances can access repositories and images. Developers can use the Docker CLI to push, pull, and manage images.
 
 ## AWS EC2
 
@@ -226,7 +237,7 @@ Flow logs can help you with a number of tasks, such as:
 
 A VPC peering connection is a networking connection between two VPCs that enables you to route traffic between them using private IPv4 addresses or IPv6 addresses. Instances in either VPC can communicate with each other as if they are within the same network. You can create a VPC peering connection between your own VPCs, or with a VPC in another AWS account. The VPCs can be in different regions (also known as an inter-region VPC peering connection).
 
-![peering-intro-diagram.png](peering-intro-diagram.png)
+![peering-intro-diagram.png](img/peering-intro-diagram.png)
 
 AWS uses the existing infrastructure of a VPC to create a VPC peering connection; it is neither a gateway nor a VPN connection, and does not rely on a separate piece of physical hardware. There is no single point of failure for communication or a bandwidth bottleneck.
 
@@ -374,14 +385,14 @@ You can monitor the MySQL error log, slow query log, and the general log. The My
 
 In a serverless Lambda function version deployment, event hooks run in the following order:
 
-![lifecycle-event-order-lambda.png](lifecycle-event-order-lambda.png)
+![lifecycle-event-order-lambda.png](img/lifecycle-event-order-lambda.png)
 
 
 #### EC2 - In-place deployments
 
 In an in-place deployment, including the rollback of an in-place deployment, event hooks are run in the following order:
 
-![lifecycle-event-order-in-place.png](lifecycle-event-order-in-place.png)
+![lifecycle-event-order-in-place.png](img/lifecycle-event-order-in-place.png)
 
 https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#reference-appspec-file-structure-hooks-run-order-ecs
 
@@ -389,7 +400,7 @@ https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-s
 
 In a blue/green deployment, event hooks are run in the following order:
 
-![lifecycle-event-order-blue-green.png](lifecycle-event-order-blue-green.png)
+![lifecycle-event-order-blue-green.png](img/lifecycle-event-order-blue-green.png)
 
 ### Deployment, Rollback, Redeployment
 
@@ -687,11 +698,27 @@ Read Unit Cost: For a query operation the read units consumed depend on the tota
 
 Operation Overhead: Since a scan operation can consume all read units, it can slow down other operations by starving them.
 
+### DAX
+
+DAX is a DynamoDB-compatible caching service that enables you to benefit from fast in-memory performance for demanding applications. DAX addresses three core scenarios:
+
+- As an in-memory cache, DAX reduces the response times of eventually consistent read workloads by an order of magnitude, from single-digit milliseconds to microseconds.
+- DAX reduces operational and application complexity by providing a managed service that is API-compatible with DynamoDB. Therefore, it requires only minimal functional changes to use with an existing application.
+- For read-heavy or bursty workloads, DAX provides increased throughput and potential operational cost savings by reducing the need to overprovision read capacity units. This is especially beneficial for applications that require repeated reads for individual keys.
+
+DAX supports server-side encryption. 
+
 ### Monitoring 
 
 You can monitor Amazon DynamoDB using CloudWatch, which collects and processes raw data from DynamoDB into readable, near real-time metrics. These statistics are retained for a period of time, so that you can access historical information for a better perspective on how your web application or service is performing. By default, DynamoDB metric data is sent to CloudWatch automatically.
 
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/monitoring-cloudwatch.html
+
+## ElastiCache
+
+### Redis vs. Memcached
+
+![redis-vs-memcached.png](img/redis-vs-memcached.png)
 
 ## AWS System Parameter Store
 
