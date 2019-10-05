@@ -5,37 +5,174 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 <!-- vim-markdown-toc GFM -->
 
 * [AWS IAM](#aws-iam)
+	* [IAM Users](#iam-users)
+	* [IAM Groups](#iam-groups)
+	* [IAM Roles](#iam-roles)
+	* [Policies and Permissions](#policies-and-permissions)
+	* [Temporary credentials](#temporary-credentials)
 * [AWS Cloudformation](#aws-cloudformation)
+	* [What is AWS CloudFormation?](#what-is-aws-cloudformation)
+	* [Concepts](#concepts)
+	* [How is AWS CloudFormation different from AWS Elastic Beanstalk?](#how-is-aws-cloudformation-different-from-aws-elastic-beanstalk)
+	* [What are the elements of an AWS CloudFormation template?](#what-are-the-elements-of-an-aws-cloudformation-template)
+	* [Stacksets](#stacksets)
 * [Elastic Beanstalk](#elastic-beanstalk)
+	* [Config files](#config-files)
+	* [Custom scripts and programs](#custom-scripts-and-programs)
+	* [Versions](#versions)
+		* [Managing Application Versions](#managing-application-versions)
+	* [Deployments](#deployments)
 * [AWS ECS](#aws-ecs)
+	* [I want to launch containers. Why do I have to launch Tasks?](#i-want-to-launch-containers-why-do-i-have-to-launch-tasks)
+	* [Launch types](#launch-types)
+	* [Task Placement](#task-placement)
+		* [Task Placement Strategies](#task-placement-strategies)
 * [AWS ECR](#aws-ecr)
 * [AWS EC2](#aws-ec2)
+	* [Tenancy types](#tenancy-types)
 * [VPC](#vpc)
+	* [What are the components of Amazon VPC?](#what-are-the-components-of-amazon-vpc)
+	* [How do I get started with Amazon VPC?](#how-do-i-get-started-with-amazon-vpc)
+	* [VPC and Subnets](#vpc-and-subnets)
+	* [Endpoints](#endpoints)
+	* [Flow logs](#flow-logs)
+	* [VPC Peering](#vpc-peering)
 * [AWS DNS](#aws-dns)
+	* [What is the difference between a Domain and a Hosted Zone?](#what-is-the-difference-between-a-domain-and-a-hosted-zone)
+	* [What is DNS Failover?](#what-is-dns-failover)
+	* [Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?](#does-dns-failover-support-elastic-load-balancers-elbs-as-endpoints)
 * [AWS Elastic IP](#aws-elastic-ip)
 * [AWS EBS](#aws-ebs)
+	* [Snapshots](#snapshots)
 * [AWS EFS](#aws-efs)
 * [AWS RDS](#aws-rds)
+	* [Connecting to an RDS instance](#connecting-to-an-rds-instance)
+	* [Monitoring](#monitoring)
+		* [Automated Monitoring Tools](#automated-monitoring-tools)
+	* [MySQL Database Log Files](#mysql-database-log-files)
 * [AWS CodeDeploy](#aws-codedeploy)
+	* [Sequence of Hooks](#sequence-of-hooks)
+		* [Lambda Function Version Deployment](#lambda-function-version-deployment)
+		* [EC2 - In-place deployments](#ec2---in-place-deployments)
+		* [EC2 - Blue/green deployments](#ec2---bluegreen-deployments)
+	* [Deployment, Rollback, Redeployment](#deployment-rollback-redeployment)
+		* [Deployment monitorin & automatic rollback](#deployment-monitorin--automatic-rollback)
 * [AWS S3](#aws-s3)
+	* [Best practices](#best-practices)
+	* [Consistency](#consistency)
+	* [Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin](#requiring-https-for-communication-between-cloudfront-and-your-amazon-s3-origin)
+	* [Cross Region Replication](#cross-region-replication)
+	* [Policies](#policies)
+	* [Amazon S3 access control lists (ACLs)](#amazon-s3-access-control-lists-acls)
+	* [MFA](#mfa)
+	* [S3 Inventory](#s3-inventory)
+	* [Object lifecycle management](#object-lifecycle-management)
+		* [Transition actions](#transition-actions)
+		* [Expiration actions](#expiration-actions)
+		* [When Should I Use Lifecycle Configuration?](#when-should-i-use-lifecycle-configuration)
+		* [How Do I Configure a Lifecycle?](#how-do-i-configure-a-lifecycle)
+	* [Configuring Amazon S3 Event Notifications](#configuring-amazon-s3-event-notifications)
+	* [S3 Select](#s3-select)
+	* [Amazon S3 Transfer Acceleration](#amazon-s3-transfer-acceleration)
 * [AWS Cognito](#aws-cognito)
+	* [User pools & Identity pools](#user-pools--identity-pools)
+	* [Streams](#streams)
 * [AWS Kinesis](#aws-kinesis)
+	* [Stream](#stream)
+		* [Kinesis Data Streams High-Level Architecture](#kinesis-data-streams-high-level-architecture)
+		* [Terminology](#terminology)
+	* [Resharding](#resharding)
+		* [Enhanced fan-out](#enhanced-fan-out)
+	* [Data Firehose](#data-firehose)
+	* [Server-Side Encryption with Kinesis Data Streams as the Data Source](#server-side-encryption-with-kinesis-data-streams-as-the-data-source)
 * [AWS DynamoDB](#aws-dynamodb)
+	* [Primary keys](#primary-keys)
+	* [Secondary indexes](#secondary-indexes)
+		* [Local seconday indexes](#local-seconday-indexes)
+		* [Global secondary index](#global-secondary-index)
+	* [Read Request Units and Write Request Units](#read-request-units-and-write-request-units)
+	* [Streams](#streams-1)
+		* [Stream view types](#stream-view-types)
+	* [DynamoDB Streams and AWS Lambda Triggers](#dynamodb-streams-and-aws-lambda-triggers)
+	* [Global Tables](#global-tables)
+	* [DynamoDB Queries](#dynamodb-queries)
+	* [DynamoDB Scans](#dynamodb-scans)
+	* [DynamoDB Scan VS Query](#dynamodb-scan-vs-query)
+	* [TTL](#ttl)
+	* [DAX](#dax)
+	* [Monitoring](#monitoring-1)
 * [ElastiCache](#elasticache)
+	* [Redis vs. Memcached](#redis-vs-memcached)
 * [AWS System Parameter Store](#aws-system-parameter-store)
 * [API Gateway](#api-gateway)
+	* [Auth](#auth)
+	* [Integration Types](#integration-types)
+	* [Stage](#stage)
+	* [Caching](#caching)
+	* [Monitoring with CloudWatch](#monitoring-with-cloudwatch)
+	* [Limits](#limits)
 * [AWS KMS](#aws-kms)
+	* [generate-data-key-without-plaintext](#generate-data-key-without-plaintext)
 * [AWS Lambda](#aws-lambda)
+	* [Deployment](#deployment)
+	* [Layers](#layers)
+	* [Invoking Lambda functions](#invoking-lambda-functions)
+	* [Misc](#misc)
+	* [Limits](#limits-1)
+	* [Debugging](#debugging)
+	* [Traffic Shifting Using Aliases](#traffic-shifting-using-aliases)
+	* [Handle Lambda Service Exceptions](#handle-lambda-service-exceptions)
+	* [Lambda@Edge](#lambdaedge)
+	* [AWS SAM](#aws-sam)
+		* [AWS SAM Template Concepts](#aws-sam-template-concepts)
 * [AWS Step Functions](#aws-step-functions)
+	* [Large payloads](#large-payloads)
 * [AWS Secrets Manager](#aws-secrets-manager)
+	* [Secret rotation](#secret-rotation)
 * [AWS Data Pipeline](#aws-data-pipeline)
+	* [What is a data node?](#what-is-a-data-node)
+	* [What is a pipeline?](#what-is-a-pipeline)
+	* [What is an activity?](#what-is-an-activity)
 * [AWS X-ray](#aws-x-ray)
+	* [Definitions](#definitions)
+		* [What is a trace?](#what-is-a-trace)
+		* [What is a segment?](#what-is-a-segment)
+		* [What is an annotation?](#what-is-an-annotation)
+	* [Uses](#uses)
 * [AWS Quicksight](#aws-quicksight)
 * [AWS Batch](#aws-batch)
+	* [AWS Batch Event Stream for CloudWatch Events](#aws-batch-event-stream-for-cloudwatch-events)
 * [AWS SQS](#aws-sqs)
+	* [At least once delivery (standard queues)](#at-least-once-delivery-standard-queues)
+	* [Message ordering](#message-ordering)
+	* [Message attriubtes](#message-attriubtes)
+	* [Visibility timeout](#visibility-timeout)
+	* [Duplicate messages](#duplicate-messages)
+	* [Polling](#polling)
+		* [Short polling](#short-polling)
+		* [Long polling](#long-polling)
+	* [Dead-Letter Queues](#dead-letter-queues)
+	* [Encription (SSE)](#encription-sse)
+	* [Cost allocation tags](#cost-allocation-tags)
+	* [Limits](#limits-2)
+	* [Common API methods](#common-api-methods)
 * [AWS SNS](#aws-sns)
+	* [System-to-sytem messaging](#system-to-sytem-messaging)
+	* [Lambda](#lambda)
+		* [SQS](#sqs)
+		* [HTTP](#http)
+	* [Amazon SNS Message Filtering](#amazon-sns-message-filtering)
+	* [Use cases](#use-cases)
+		* [Fanout](#fanout)
+		* [Application and System Alerts](#application-and-system-alerts)
 * [AWS CloudWatch](#aws-cloudwatch)
+	* [Publishing metrics](#publishing-metrics)
 * [AWS CodePipeline](#aws-codepipeline)
+	* [What is AWS CodePipeline?](#what-is-aws-codepipeline)
+	* [What is a pipeline?](#what-is-a-pipeline-1)
+	* [How do I start a pipeline?](#how-do-i-start-a-pipeline)
+	* [How can I provision and manage my AWS resources through a release workflow process?](#how-can-i-provision-and-manage-my-aws-resources-through-a-release-workflow-process)
+	* [Integrations](#integrations)
 
 <!-- vim-markdown-toc -->
 
@@ -61,7 +198,7 @@ A role can be assigned to a federated user who signs in by using an external ide
 
 ### Policies and Permissions 
 
-You manage access in AWS by creating policies and attaching them to IAM identities (users, groups of users, or roles) or AWS resources. A policy is an object in AWS that, when associated with an identity or resource, defines their permissions. AWS evaluates these policies when a principal entity (user or role) makes a request. Permissions in the policies determine whether the request is allowed or denied. Most policies are stored in AWS as JSON documents. AWS supports six types of policies: identity-based policies, resource-based policies, permissions boundaries, Organizations SCPs, ACLs, and session policies.
+You manage access in AWS by **creating policies and attaching them to IAM identities (users, groups of users, or roles) or AWS resources**. A policy is an object in AWS that, when associated with an identity or resource, defines their permissions. AWS evaluates these policies when a principal entity (user or role) makes a request. Permissions in the policies determine whether the request is allowed or denied. Most policies are stored in AWS as JSON documents. AWS supports six types of policies: identity-based policies, resource-based policies, permissions boundaries, Organizations SCPs, ACLs, and session policies.
 
 
 ### Temporary credentials
@@ -74,13 +211,13 @@ Temporary credentials are primarily used with IAM roles, but there are also othe
 
 ### What is AWS CloudFormation? 
 
-AWS CloudFormation is a service that gives developers and businesses an easy way to create a collection of related AWS resources and provision them in an orderly and predictable fashion.
+AWS CloudFormation is a service that gives developers and businesses an easy way to **create a collection of related AWS resources** and provision them in an orderly and predictable fashion.
 
 ### Concepts
 
 AWS CloudFormation introduces two concepts:
-- The template, a JSON or YAML-format, text-based file that describes all the AWS resources you need to deploy to run your application and
-- the stack, the set of AWS resources that are created and managed as a single unit when AWS CloudFormation instantiates a template.
+- The **template**, a JSON or YAML-format, text-based file that describes all the AWS resources you need to deploy to run your application and
+- the **stack**, the set of AWS resources that are created and managed as a single unit when AWS CloudFormation instantiates a template.
 
 ### How is AWS CloudFormation different from AWS Elastic Beanstalk?
 
@@ -90,13 +227,13 @@ AWS CloudFormation supports Elastic Beanstalk application environments as one of
 
 ### What are the elements of an AWS CloudFormation template?
 
-1. An optional list of template parameters (input values supplied at stack creation time)
+1. An optional list of template **parameters** (input values supplied at stack creation time)
 
-2. An optional list of output values (e.g. the complete URL to a web application)
+2. An optional list of **output values** (e.g. the complete URL to a web application)
 
 3. An optional list of data tables used to lookup static configuration values (e.g., AMI names)
 
-4. The list of AWS resources and their configuration values
+4. The list of AWS **resources** and their configuration values
 
 5. A template file format version number
 
@@ -114,7 +251,7 @@ AWS CloudFormation StackSets extends the functionality of stacks by enabling you
 
 ### Config files
 
-You can add AWS Elastic Beanstalk configuration files (.ebextensions) to your web application's source code to configure your environment and customize the AWS resources that it contains. Configuration files are YAML- or JSON-formatted documents with a .config file extension that you place in a folder named .ebextensions and deploy in your application source bundle.
+You can add AWS Elastic Beanstalk configuration files (`.ebextensions`) to your web application's source code to configure your environment and customize the AWS resources that it contains. Configuration files are YAML- or JSON-formatted documents with a `.config` file extension that you place in a folder named .ebextensions and deploy in your application source bundle.
 
 ### Custom scripts and programs 
 
@@ -142,25 +279,25 @@ Amazon Elastic Container Service (Amazon ECS) is a highly scalable, high-perform
 
 Docker encourages you to split your applications up into their individual components, and Elastic Container Service is optimized for this pattern. Tasks allow you to define a set of containers that you would like to be placed together (or part of the same placement decision), their properties, and how they may be linked. Tasks include all the information that Amazon ECS needs to make the placement decision. To launch a single container, your Task Definition should only include one container definition.
 
+### Launch types
+
+The **EC2 launch type** allows you to run your containerized applications on a cluster of Amazon EC2 instances that you manage.
+
+The **Fargate launch type** allows you to run your containerized applications without the need to provision and manage the backend infrastructure. Just register your task definition and Fargate launches the container for you.
+
 ### Task Placement
 
+When a task that uses the EC2 launch type is launched, Amazon ECS must determine where to place the task based on the requirements specified in the task definition, such as CPU and memory. Similarly, when you scale down the task count, Amazon ECS must determine which tasks to terminate. You can apply task placement strategies and constraints to customize how Amazon ECS places and terminates tasks. 
 #### Task Placement Strategies
 
-> TODO cleanup
-
-A task placement strategy is an algorithm for selecting instances for task placement or tasks for termination. Task placement strategies can be specified when either running a task or creating a new service. For more information, see Amazon ECS Task Placement.
+A **task placement strategy** is an algorithm for selecting instances for task placement or tasks for termination. Task placement strategies can be specified when either running a task or creating a new service.
 
 Strategy Types
 Amazon ECS supports the following task placement strategies:
 
-binpack
-Place tasks based on the least available amount of CPU or memory. This minimizes the number of instances in use.
-
-random
-Place tasks randomly.
-
-spread
-Place tasks evenly based on the specified value. Accepted values are instanceId (or host, which has the same effect), or any platform or custom attribute that is applied to a container instance, such as attribute:ecs.availability-zone. Service tasks are spread based on the tasks from that service. Standalone tasks are spread based on the tasks from the same task group.
+- `binpack` - Place tasks based on the least available amount of CPU or memory. This minimizes the number of instances in use.
+- `random` - Place tasks randomly.
+- `spread` - Place tasks evenly based on the specified value. Accepted values are instanceId (or host, which has the same effect), or any platform or custom attribute that is applied to a container instance, such as attribute:ecs.availability-zone. Service tasks are spread based on the tasks from that service. Standalone tasks are spread based on the tasks from the same task group.
 
 ## AWS ECR
 
@@ -186,13 +323,13 @@ Amazon EC2 provides the following features:
 
 Amazon EC2 provides the following purchasing options to enable you to optimize your costs based on your needs:
 
-- On-Demand Instances – Pay, by the second, for the instances that you launch.
-- Reserved Instances – Purchase, at a significant discount, instances that are always available, for a term from one to three years.
-- Scheduled Instances – Purchase instances that are always available on the specified recurring schedule, for a one-year term.
-- Spot Instances – Request unused EC2 instances, which can lower your Amazon EC2 costs significantly.
-- Dedicated Hosts – Pay for a physical host that is fully dedicated to running your instances, and bring your existing per-socket, per-core, or per-VM software licenses to reduce costs.
-- Dedicated Instances – Pay, by the hour, for instances that run on single-tenant hardware.
-- Capacity Reservations – Reserve capacity for your EC2 instances in a specific Availability Zone for any duration.
+- **On-Demand** Instances – Pay, by the second, for the instances that you launch.
+- **Reserved** Instances – Purchase, at a significant discount, instances that are always available, for a term from one to three years.
+- **Scheduled** Instances – Purchase instances that are always available on the specified recurring schedule, for a one-year term.
+- **Spot** Instances – Request unused EC2 instances, which can lower your Amazon EC2 costs significantly.
+- **Dedicated Hosts** – Pay for a physical host that is fully dedicated to running your instances, and bring your existing per-socket, per-core, or per-VM software licenses to reduce costs.
+- **Dedicated Instances** – Pay, by the hour, for instances that run on single-tenant hardware.
+- **Capacity Reservations** – Reserve capacity for your EC2 instances in a specific Availability Zone for any duration.
 
 ## VPC 
 
@@ -202,14 +339,14 @@ Amazon EC2 provides the following purchasing options to enable you to optimize y
 
 Amazon VPC comprises a variety of objects that will be familiar to customers with existing networks:
 
-- A Virtual Private Cloud: A logically isolated virtual network in the AWS cloud. You define a VPC’s IP address space from ranges you select.
-- Subnet: A segment of a VPC’s IP address range where you can place groups of isolated resources.
-- Internet Gateway: The Amazon VPC side of a connection to the public Internet.
-- NAT Gateway: A highly available, managed Network Address Translation (NAT) service for your resources in a private subnet to access the Internet.
-- Virtual private gateway: The Amazon VPC side of a VPN connection.
-- Peering Connection: A peering connection enables you to route traffic via private IP addresses between two peered VPCs.
-- VPC Endpoints: Enables private connectivity to services hosted in AWS, from within your VPC without using an Internet Gateway, VPN, Network Address Translation (NAT) devices, or firewall proxies.
-- Egress-only Internet Gateway: A stateful gateway to provide egress only access for IPv6 traffic from the VPC to the Internet.
+- A **Virtual Private Cloud**: A logically isolated virtual network in the AWS cloud. You define a VPC’s IP address space from ranges you select.
+- **Subnet**: A segment of a VPC’s IP address range where you can place groups of isolated resources.
+- **Internet Gateway**: The Amazon VPC side of a connection to the public Internet.
+- **NAT Gateway**: A highly available, managed Network Address Translation (NAT) service for your resources in a private subnet to access the Internet.
+- **Virtual private gateway**: The Amazon VPC side of a VPN connection.
+- **Peering Connection**: A peering connection enables you to route traffic via private IP addresses between two peered VPCs.
+- **VPC Endpoints**: Enables private connectivity to services hosted in AWS, from within your VPC without using an Internet Gateway, VPN, Network Address Translation (NAT) devices, or firewall proxies.
+- **Egress-only Internet Gateway**: A stateful gateway to provide egress only access for IPv6 traffic from the VPC to the Internet.
     
 ### How do I get started with Amazon VPC?
  
@@ -244,7 +381,7 @@ Endpoints are virtual devices. They are horizontally scaled, redundant, and high
 
 ### Flow logs
 
-VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3. After you've created a flow log, you can retrieve and view its data in the chosen destination.
+VPC Flow Logs is a feature that enables you to **capture information about the IP traffic** going to and from network interfaces in your VPC. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3. After you've created a flow log, you can retrieve and view its data in the chosen destination.
 
 Flow logs can help you with a number of tasks, such as:
 
@@ -272,7 +409,7 @@ A domain is a general DNS concept. Domain names are easily recognizable names fo
 
 ### What is DNS Failover?
 
-DNS Failover consists of two components: health checks and failover. Health checks are automated requests sent over the Internet to your application to verify that your application is reachable, available, and functional. You can configure the health checks to be similar to the typical requests made by your users, such as requesting a web page from a specific URL. With DNS failover, Route 53 only returns answers for resources that are healthy and reachable from the outside world, so that your end users are routed away from a failed or unhealthy part of your application.
+DNS Failover consists of two components: **health checks** and **failover**. Health checks are automated requests sent over the Internet to your application to verify that your application is reachable, available, and functional. You can configure the health checks to be similar to the typical requests made by your users, such as requesting a web page from a specific URL. With DNS failover, Route 53 only returns answers for resources that are healthy and reachable from the outside world, so that your end users are routed away from a failed or unhealthy part of your application.
 
 ### Does DNS Failover support Elastic Load Balancers (ELBs) as endpoints?
 
@@ -280,7 +417,7 @@ Yes, you can configure DNS Failover for Elastic Load Balancers (ELBs). To enable
 
 ## AWS Elastic IP
 
-https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html
+[Link to AWS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
 
 An Elastic IP address is a static IPv4 address designed for dynamic cloud computing. An Elastic IP address is associated with your AWS account. With an Elastic IP address, you can mask the failure of an instance or software by rapidly remapping the address to another instance in your account.
 
@@ -294,6 +431,8 @@ An Elastic IP address is a public IPv4 address, which is reachable from the inte
 
 
 ## AWS EBS
+
+[Link to AWS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html)
 
 Amazon Elastic Block Store (Amazon EBS) provides block level storage volumes for use with EC2 instances. EBS volumes behave like raw, unformatted block devices. You can mount these volumes as devices on your instances. You can mount multiple volumes on the same instance, but each volume can be attached to only one instance at a time. You can create a file system on top of these volumes, or use them in any way you would use a block device (like a hard drive). You can dynamically change the configuration of a volume attached to an instance.
 
@@ -346,15 +485,15 @@ Monitoring Tools
 
 AWS provides various tools that you can use to monitor Amazon RDS. You can configure some of these tools to do the monitoring for you, while some of the tools require manual intervention. We recommend that you automate monitoring tasks as much as possible.
 
-*Automated Monitoring Tools*
+#### Automated Monitoring Tools
 
 You can use the following automated monitoring tools to watch Amazon RDS and report when something is wrong:
 
-*Amazon RDS Events* – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. 
+**Amazon RDS Events** – Subscribe to Amazon RDS events to be notified when changes occur with a DB instance, DB snapshot, DB parameter group, or DB security group. 
 
-*Database log files* – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. 
+**Database log files** – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. 
 
-*Amazon RDS Enhanced Monitoring* — Look at metrics in real time for the operating system. 
+**Amazon RDS Enhanced Monitoring** — Look at metrics in real time for the operating system. 
 
 In addition, Amazon RDS integrates with Amazon CloudWatch for additional monitoring capabilities:
 
@@ -362,7 +501,7 @@ Amazon CloudWatch Metrics – Amazon RDS automatically sends metrics to CloudWat
 
 Amazon CloudWatch Alarms – You can watch a single Amazon RDS metric over a specific time period, and perform one or more actions based on the value of the metric relative to a threshold you set. 
 
-*Amazon CloudWatch Logs* – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. 
+**Amazon CloudWatch Logs** – Most DB engines enable you to monitor, store, and access your database log files in CloudWatch Logs. 
 
 Manual Monitoring Tools  
 Another important part of monitoring Amazon RDS involves manually monitoring those items that the CloudWatch alarms don't cover. The Amazon RDS, CloudWatch, AWS Trusted Advisor and other AWS console dashboards provide an at-a-glance view of the state of your AWS environment. We recommend that you also check the log files on your DB instance.
@@ -396,7 +535,7 @@ In addition, you can use CloudWatch to do the following:
 
 ### MySQL Database Log Files
 
-You can monitor the MySQL error log, slow query log, and the general log. The MySQL error log is generated by default; you can generate the slow query and general logs by setting parameters in your DB parameter group. Amazon RDS rotates all of the MySQL log files; the intervals for each type are given following.
+You can monitor the MySQL **error log**, **slow query log**, and the **general log**. The MySQL error log is generated by default; you can generate the slow query and general logs by setting parameters in your DB parameter group. Amazon RDS rotates all of the MySQL log files; the intervals for each type are given following.
 
 ## AWS CodeDeploy 
 
@@ -815,11 +954,9 @@ Amazon Cognito user pools let you create customizable authentication and authori
 
 The following mechanisms can be used for performing other tasks related to access control:
 
-Cross-origin resource sharing (CORS) lets you control how your REST API responds to cross-domain resource requests. 
-
-Client-side SSL certificates can be used to verify that HTTP requests to your backend system are from API Gateway. 
-
-AWS WAF can be used to protect your API Gateway API from common web exploits. 
+- Cross-origin resource sharing (CORS) lets you control how your REST API responds to cross-domain resource requests. 
+- Client-side SSL certificates can be used to verify that HTTP requests to your backend system are from API Gateway. 
+- AWS WAF can be used to protect your API Gateway API from common web exploits. 
 
 The following mechanisms can be used for tracking and limiting the access that you have granted to authorized clients:
 
@@ -828,23 +965,20 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-
 
 ### Integration Types
 
-> TODO: clear this up (formatting)
-
 The following list summarizes the supported integration types:
 
-AWS: This type of integration lets an API expose AWS service actions. In AWS integration, you must configure both the integration request and integration response and set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
+`AWS`: This type of integration lets an API expose AWS service actions. In AWS integration, you must configure both the integration request and integration response and set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
 
-AWS_PROXY: This type of integration lets an API method be integrated with the Lambda function invocation action with a flexible, versatile, and streamlined integration setup. This integration relies on direct interactions between the client and the integrated Lambda function. With this type of integration, also known as the Lambda proxy integration, you do not set the integration request or the integration response. API Gateway passes the incoming request from the client as the input to the backend Lambda function. The integrated Lambda function takes the input of this format and parses the input from all available sources, including request headers, URL path variables, query string parameters, and applicable body. The function returns the result following this output format. This is the preferred integration type to call a Lambda function through API Gateway and is not applicable to any other AWS service actions, including Lambda actions other than the function-invoking action.
+`AWS_PROXY`: This type of integration lets an API method be integrated with the Lambda function invocation action with a flexible, versatile, and streamlined integration setup. This integration relies on direct interactions between the client and the integrated Lambda function. With this type of integration, also known as the Lambda proxy integration, you do not set the integration request or the integration response. API Gateway passes the incoming request from the client as the input to the backend Lambda function. The integrated Lambda function takes the input of this format and parses the input from all available sources, including request headers, URL path variables, query string parameters, and applicable body. The function returns the result following this output format. This is the preferred integration type to call a Lambda function through API Gateway and is not applicable to any other AWS service actions, including Lambda actions other than the function-invoking action.
 
-HTTP: This type of integration lets an API expose HTTP endpoints in the backend. With the HTTP integration, also known as the HTTP custom integration, you must configure both the integration request and integration response. You must set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
+`HTTP`: This type of integration lets an API expose HTTP endpoints in the backend. With the HTTP integration, also known as the HTTP custom integration, you must configure both the integration request and integration response. You must set up necessary data mappings from the method request to the integration request, and from the integration response to the method response.
 
-HTTP_PROXY: The HTTP proxy integration allows a client to access the backend HTTP endpoints with a streamlined integration setup on single API method. You do not set the integration request or the integration response. API Gateway passes the incoming request from the client to the HTTP endpoint and passes the outgoing response from the HTTP endpoint to the client.
+`HTTP_PROXY`: The HTTP proxy integration allows a client to access the backend HTTP endpoints with a streamlined integration setup on single API method. You do not set the integration request or the integration response. API Gateway passes the incoming request from the client to the HTTP endpoint and passes the outgoing response from the HTTP endpoint to the client.
 
-MOCK: This type of integration lets API Gateway return a response without sending the request further to the backend. This is useful for API testing because it can be used to test the integration set up without incurring charges for using the backend and to enable collaborative development of an API. In collaborative development, a team can isolate their development effort by setting up simulations of API components owned by other teams by using the MOCK integrations. It is also used to return CORS-related headers to ensure that the API method permits CORS access. In fact, the API Gateway console integrates the OPTIONS method to support CORS with a mock integration. Gateway responses are other examples of mock integrations.
+`MOCK`: This type of integration lets API Gateway return a response without sending the request further to the backend. This is useful for API testing because it can be used to test the integration set up without incurring charges for using the backend and to enable collaborative development of an API. In collaborative development, a team can isolate their development effort by setting up simulations of API components owned by other teams by using the MOCK integrations. It is also used to return CORS-related headers to ensure that the API method permits CORS access. In fact, the API Gateway console integrates the OPTIONS method to support CORS with a mock integration. Gateway responses are other examples of mock integrations.
 
 ### Stage
 
-Set up a Stage in API Gateway
 A stage is a named reference to a deployment, which is a snapshot of the API. You use a Stage to manage and optimize a particular deployment. For example, you can set up stage settings to enable caching, customize request throttling, configure logging, define stage variables or attach a canary release for testing.
 
 
@@ -1026,17 +1160,21 @@ AWS X-Ray helps developers analyze and debug production, distributed application
 
 X-Ray provides a user-centric model, instead of service-centric or resource-centric model, for collecting data related to requests made to your application. This model enables you to create a user-centric picture of requests as they travel across services and resources.
 
-What is a trace?
+### Definitions
+
+#### What is a trace?
 
 An X-Ray trace is a set of data points that share the same trace ID. For example, when a client makes a request to your application, it is assigned a unique trace ID. As the request makes its way through services in your application, the services relay information regarding the request back to X-Ray using this unique trace ID. The piece of information relayed by each service in your application to X-Ray is a segment, and a trace is a collection of segments.
 
-What is a segment? 
+#### What is a segment? 
 
 An X-Ray segment encapsulates all the data points for a single component (for example, authorization service) of the distributed application. 
 
-What is an annotation?
+#### What is an annotation?
 
 An X-Ray annotation is system-defined or user-defined data associated with a segment. A segment can contain multiple annotations. 
+
+### Uses
 
 X-Ray makes it easy for you to:
 
