@@ -615,13 +615,7 @@ Producers put records into Amazon Kinesis Data Streams. For example, a web serve
   
 Consumers get records from Amazon Kinesis Data Streams and process them. These consumers are known as Amazon Kinesis Data Streams Application.
 
-**Amazon Kinesis Data Streams Application**
-
-An Amazon Kinesis Data Streams application is a consumer of a stream that commonly runs on a fleet of EC2 instances.
-
-There are two types of consumers that you can develop: shared fan-out consumers and enhanced fan-out consumers. To learn about the differences between them, and to see how you can create each type of consumer, see Reading Data from Amazon Kinesis Data Streams.
-
-The output of a Kinesis Data Streams application can be input for another stream, enabling you to create complex topologies that process data in real time. An application can also send data to a variety of other AWS services. There can be multiple applications for one stream, and each application can consume data from the stream independently and concurrently.
+There are two types of consumers that you can develop: **shared fan-out** consumers and **enhanced fan-out** consumers. 
 
 **Shard**
 
@@ -637,23 +631,13 @@ A partition key is used to group data by shard within a stream. Kinesis Data Str
 
 Each data record has a sequence number that is unique per partition-key within its shard. Kinesis Data Streams assigns the sequence number after you write to the stream with client.putRecords or client.putRecord. Sequence numbers for the same partition key generally increase over time. The longer the time period between write requests, the larger the sequence numbers become.
 
-Note  
-Sequence numbers cannot be used as indexes to sets of data within the same stream. To logically separate sets of data, use partition keys or create a separate stream for each dataset.
-
 **Kinesis Client Library**
 
 The Kinesis Client Library is compiled into your application to enable fault-tolerant consumption of data from the stream. The Kinesis Client Library ensures that for every shard there is a record processor running and processing that shard. The library also simplifies reading data from the stream. The Kinesis Client Library uses an Amazon DynamoDB table to store control data. It creates one table per application that is processing data.
 
-There are two major versions of the Kinesis Client Library. Which one you use depends on the type of consumer you want to create. 
-
-**Application Name**
-
-The name of an Amazon Kinesis Data Streams application identifies the application. Each of your applications must have a unique name that is scoped to the AWS account and Region used by the application. This name is used as a name for the control table in Amazon DynamoDB and the namespace for Amazon CloudWatch metrics.
-
-**Server-Side Encryption**
+### Server-Side Encryption
 
 Amazon Kinesis Data Streams can automatically encrypt sensitive data as a producer enters it into a stream. Kinesis Data Streams uses AWS KMS master keys for encryption. 
-
 
 ### Resharding
 
@@ -661,8 +645,7 @@ Resharding enables you to increase or decrease the number of shards in a stream 
 
 Typically, when you use the KCL, you should ensure that the number of instances does not exceed the number of shards (except for failure standby purposes)
 
-
-#### Enhanced fan-out
+### Enhanced fan-out
 
 Using Consumers with Enhanced Fan-Out
 
@@ -670,9 +653,9 @@ In Amazon Kinesis Data Streams, you can build consumers that use a feature calle
 
 ### Data Firehose
 
-Amazon Kinesis Data Firehose is the easiest way to reliably load streaming data into data lakes, data stores and analytics tools. It can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time analytics with existing business intelligence tools and dashboards you’re already using today. 
+**Amazon Kinesis Data Firehose** is the easiest way to reliably load streaming data into data lakes, data stores and analytics tools. It can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time analytics with existing business intelligence tools and dashboards you’re already using today. 
 
-### Server-Side Encryption with Kinesis Data Streams as the Data Source
+#### Server-Side Encryption with Kinesis Data Streams as the Data Source
 
 When you configure a Kinesis data stream as the data source of a Kinesis Data Firehose delivery stream, Kinesis Data Firehose no longer stores the data at rest. Instead, the data is stored in the data stream.
 
