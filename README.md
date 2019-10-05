@@ -970,6 +970,35 @@ Immediately after a message is received, it remains in the queue. To prevent oth
 
 For **standard queues**, you might occasionally receive a duplicate copy of a message (at-least-once delivery). If you use a standard queue, you must design your applications to be idempotent (that is, they must not be affected adversely when processing the same message more than once).
 
+### Polling
+
+The process of consuming messages from a queue depends on whether you use short or long polling. By default, Amazon SQS uses short polling. 
+
+#### Short polling
+
+When you consume messages from a queue using short polling, Amazon SQS samples a subset of its servers (based on a weighted random distribution) and returns messages from only those servers. Thus, a particular ReceiveMessage request might not return all of your messages. However, if you have fewer than 1,000 messages in your queue, a subsequent request will return your messages.
+
+#### Long polling
+
+When the wait time for the ReceiveMessage API action is greater than 0, long polling is in effect. Long polling helps reduce the cost of using Amazon SQS by eliminating the number of empty responses (when there are no messages available for a ReceiveMessage request) and false empty responses (when messages are available but aren't included in a response).
+
+Long polling offers the following benefits:
+
+- Eliminate empty responses by allowing Amazon SQS to wait until a message is available in a queue before sending a response. Unless the connection times out, the response to the ReceiveMessage request contains at least one of the available messages, up to the maximum number of messages specified in the ReceiveMessage action.
+
+- Eliminate false empty responses by querying all—rather than a subset of—Amazon SQS servers.
+
+### Dead-Letter Queues
+
+Amazon SQS supports dead-letter queues, which other queues (source queues) can target for messages that can't be processed (consumed) successfully. Dead-letter queues are useful for debugging your application or messaging system because they let you isolate problematic messages to determine why their processing doesn't succeed.
+
+The *redrive policy* specifies the source queue, the dead-letter queue, and the conditions under which Amazon SQS moves messages from the former to the latter if the consumer of the source queue fails to process a message a specified number of times. When the `ReceiveCount` for a message exceeds the `maxReceiveCount` for a queue, Amazon SQS moves the message to a dead-letter queue (with its original message ID).
+
+### Encription (SSE)
+
+Server-side encryption (SSE) lets you transmit sensitive data in encrypted queues. SSE protects the contents of messages in Amazon SQS queues using keys managed in AWS Key Management Service (AWS KMS). SSE encrypts messages as soon as Amazon SQS receives them. The messages are stored in encrypted form and Amazon SQS decrypts messages only when they are sent to an authorized consumer.
+
+
 ### Cost allocation tags
 
 To organize and identify your Amazon SQS queues for cost allocation, you can add metadata tags that identify a queue's purpose, owner, or environment. —this is especially useful when you have many queues.
@@ -995,12 +1024,18 @@ To organize and identify your Amazon SQS queues for cost allocation, you can add
 - Message size
   - The minimum message size is 1 byte (1 character). 
   - The maximum is 262,144 bytes (256 KB).
+  - Using the Extended Client Library (Java), message payloads larger than 256KB are stored in an Amazon Simple Storage Service (S3) bucket.
 - Message visibility timeout
   - The default visibility timeout for a message is 30 seconds.
   - The minimum is 0 seconds. 
   - The maximum is 12 hours. 
-  
-
+ 
+### Common API methods
+ 
+- `CreateQueue`, `DeleteQueue`
+- `PurgeQueue` delete all the messages in queue
+- `SendMessage`, `ReceiveMessage`, DeleteMessage
+- `ChangeMessageVisibility`: change the timeout
 
 ## AWS SNS
 
