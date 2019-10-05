@@ -1018,7 +1018,11 @@ An X-Ray segment encapsulates all the data points for a single component (for ex
 
 #### What is an annotation?
 
-An X-Ray annotation is system-defined or user-defined data associated with a segment. A segment can contain multiple annotations. 
+Annotations are simple key-value pairs that are **indexed for use with filter expressions**. Use annotations to record data that you want to use to **group traces** in the console, or when calling the `GetTraceSummaries` API. X-Ray indexes up to 50 annotations per trace.
+
+#### What is metadata?
+
+Metadata are key-value pairs with values of any type, including objects and lists, but that **are not indexed**. Use metadata to record data you want to store in the trace but don't need to use for searching traces. You can view annotations and metadata in the segment or subsegment details in the X-Ray console.
 
 ### Uses
 
