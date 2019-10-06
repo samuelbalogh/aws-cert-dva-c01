@@ -71,7 +71,7 @@ Temporary credentials are primarily used with IAM roles, but there are also othe
 
 ## AWS Cloudformation
 
-[Link to AWS](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html)
+[Link to AWS](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/GettingStarted.html)
 
 ### What is AWS CloudFormation? 
 
@@ -606,6 +606,21 @@ When using server-side encryption with customer-provided encryption keys (SSE-C)
 - Storage capacity is virtually unlimited
 - Can't change a bucket's region after creation
 
+
+### AWS CloudFront
+
+Amazon CloudFront is a web service that speeds up distribution of your static and dynamic web content, such as .html, .css, .js, and image files, to your users. CloudFront delivers your content through a worldwide network of data centers called edge locations. When a user requests content that you're serving with CloudFront, the user is routed to the edge location that provides the lowest latency (time delay), so that content is delivered with the best possible performance.
+
+If the content is already in the edge location with the lowest latency, CloudFront delivers it immediately.
+
+If the content is not in that edge location, CloudFront retrieves it from an origin that you've defined—such as an Amazon S3 bucket, a MediaPackage channel, or an HTTP server (for example, a web server) that you have identified as the source for the definitive version of your content.
+
+#### Origin failover
+
+You can set up CloudFront with origin failover for scenarios that require high availability. To get started, create an origin group in which you designate a primary origin for CloudFront plus a second origin that CloudFront automatically switches to when the primary origin returns specific HTTP status code failure responses.
+
+To set up origin failover, you must have a distribution with at least two origins
+
 ## AWS Cognito 
 
 ### User pools & Identity pools
@@ -920,23 +935,30 @@ Generates a unique data key. This operation returns a data key that is encrypted
 Creating a Deployment Package
 
 To create a Lambda function you first create a Lambda function deployment package, a .zip or .jar file consisting of your code and any dependencies. When creating the zip, include only the code and its dependencies, not the containing folder. You will then need to set the appropriate security permissions for the zip package.
-
-AWS Lambda Deployment Package in Python
-
-A deployment package is a ZIP archive that contains your function code and dependencies. You need to create a deployment package if you use the Lambda API to manage functions, or if you need to include libraries and dependencies other than the AWS SDK. You can upload the package directly to Lambda, or you can use an Amazon S3 bucket, and then upload it to Lambda. If the deployment package is larger than 50 MB, you must use Amazon S3.
+You can upload the package directly to Lambda, or you can use an Amazon S3 bucket, and then upload it to Lambda. If the deployment package is larger than 50 MB, you must use Amazon S3.
 
 ### Layers
 
 You can configure your Lambda function to pull in additional code and content in the form of layers. A layer is a ZIP archive that contains libraries, a custom runtime, or other dependencies. With layers, you can use libraries in your function without needing to include them in your deployment package.
 
-Layers let you keep your deployment package small, which makes development easier. You can avoid errors that can occur when you install and package dependencies with your function code. For Node.js, Python, and Ruby functions, you can develop your function code in the Lambda console as long as you keep your deployment package under 3 MB.
+Layers let you keep your deployment package small, which makes development easier. You can avoid errors that can occur when you install and package dependencies with your function code. 
+
+To add layers to your function, use the `update-function-configuration` command. 
+
+```
+$ aws lambda update-function-configuration --function-name my-function \
+--layers arn:aws:lambda:us-east-2:123456789012:layer:my-layer:3 \
+arn:aws:lambda:us-east-2:210987654321:layer:their-layer:2
+```
+
+To create a layer, use the `publish-layer-version` command with a name, description, ZIP archive, and a list of runtimes that are compatible with the layer.
 
 
 ### Invoking Lambda functions
 
 You can invoke Lambda functions directly with the Lambda console, the Lambda API, the AWS SDK, the AWS CLI, and AWS toolkits. You can also configure other AWS services to invoke your function, or configure Lambda to read from a stream or queue and invoke your function.
 
-When you invoke a function, you can choose to invoke it synchronously or asynchronously. With synchronous invocation, you wait for the function to process the event and return a response. With asynchronous invocation, Lambda queues the event for processing and returns a response immediately. For asynchronous invocation, Lambda handles retries and can send failed events to a dead-letter queue.
+When you invoke a function, you can choose to invoke it **synchronously** or **asynchronously**. With synchronous invocation, you wait for the function to process the event and return a response. With asynchronous invocation, Lambda queues the event for processing and returns a response immediately. For asynchronous invocation, Lambda handles retries and can send failed events to a dead-letter queue.
 
 To process items from a stream or queue, you can create an *event source mapping*. An event source mapping is a resource in Lambda that reads items from an Amazon Simple Queue Service queue, an Amazon Kinesis stream, or a Amazon DynamoDB stream, and sends them to your function in batches.
 
