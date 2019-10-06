@@ -948,6 +948,18 @@ In the Invoke API, you have 3 options to choose from for the InvocationType:
 - Minimize your deployment package size to its runtime necessities. This will reduce the amount of time that it takes for your deployment package to be downloaded and unpacked ahead of invocation. 
 - Avoid using recursive code in your Lambda function, wherein the function automatically calls itself until some arbitrary criteria is met. This could lead to unintended volume of function invocations and escalated costs.
 
+### Execution roles
+
+An AWS Lambda function's execution role grants it permission to access AWS services and resources. You provide this role when you create a function, and Lambda assumes the role when your function is invoked. 
+
+The following managed policies provide permissions that are required to use Lambda features:
+
+- `AWSLambdaBasicExecutionRole` – Permission to upload logs to CloudWatch.
+- `AWSLambdaKinesisExecutionRole` – Permission to read events from an Amazon Kinesis data stream or consumer.
+- `AWSLambdaDynamoDBExecutionRole` – Permission to read records from an Amazon DynamoDB stream.
+- `AWSLambdaSQSQueueExecutionRole` – Permission to read a message from an Amazon Simple Queue Service (Amazon SQS) queue.
+- `AWSLambdaVPCAccessExecutionRole` – Permission to manage elastic network interfaces to connect your function to a VPC.
+- `AWSXrayWriteOnlyAccess` – Permission to upload trace data to X-Ray.
 
 ### Limits
 
