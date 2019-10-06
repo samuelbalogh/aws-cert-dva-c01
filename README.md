@@ -105,6 +105,18 @@ With parameters, you can customize aspects of your template at run time, when th
 
 Output values are a very convenient way to present a stack’s key resources (such as the address of an Elastic Load Balancing load balancer or Amazon RDS database) to the user via the AWS Management Console, or the command line tools. You can use simple functions to concatenate string literals and value of attributes associated with the actual AWS resources.
 
+### Functions
+
+AWS CloudFormation provides several built-in functions that help you manage your stacks. Use intrinsic functions in your templates to assign values to properties that are not available until runtime.
+
+- `Ref` - returns the value of the specified `parameter` or `resource` (the physical ID of the resource or the value of the parameter.)
+- `Fn::GetAtt` - returns the value of an attribute from a resource in the template
+- `Fn::FindInMap` - returns the value corresponding to keys in a two-level map that is declared in the `Mappings` section.
+- `Fn::ImportValue` - returns the value of an output exported by another stack. You typically use this function to create cross-stack references.
+- `Fn::Join` - appends a set of values into a single value, separated by the specified delimiter.
+- `Fn::Sub` - substitutes variables in an input string with values that you specify. In your templates, you can use this function to construct commands or outputs that include values that aren't available until you create or update a stack.
+- Condition Functions (`Fn::If`, `Fn::Not`, `Fn::Equals`, etc.)
+
 ### Stacksets
 
 AWS CloudFormation StackSets extends the functionality of stacks by enabling you to create, update, or delete stacks across multiple accounts and regions with a single operation. 
