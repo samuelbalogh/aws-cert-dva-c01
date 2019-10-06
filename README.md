@@ -722,6 +722,12 @@ One read request unit represents one strongly consistent read request, or two ev
 
 One write request unit represents one write for an item up to 1 KB in size. If you need to write an item that is larger than 1 KB, DynamoDB needs to consume additional write request units. Transactional write requests require 2 write request units to perform one write for items up to 1 KB. The total number of write request units required depends on the item size. For example, if your item size is 2 KB, you require 2 write request units to sustain one write request or 4 write request units for a transactional write request.
 
+### Optimistic locking
+
+Optimistic locking is a strategy to ensure that the client-side item that you are updating (or deleting) is the same as the item in Amazon DynamoDB. If you use this strategy, your database writes are protected from being overwritten by the writes of others, and vice versa.
+
+With optimistic locking, each item has an attribute that acts as a version number. If you retrieve an item from a table, the application records the version number of that item. You can update the item, but only if the version number on the server side has not changed. If there is a version mismatch, it means that someone else has modified the item before you did. The update attempt fails, because you have a stale version of the item. If this happens, you simply try again by retrieving the item and then trying to update it.
+
 ### Streams
 
 When enabled, DynamoDB Streams captures a time-ordered sequence of item-level modifications in a DynamoDB table and durably stores the information for up to 24 hours. Applications can access a series of stream records, which contain an item change, from a DynamoDB stream in near real time.
@@ -934,6 +940,7 @@ In the Invoke API, you have 3 options to choose from for the InvocationType:
   - 3 MB (console editor)
 - `/tmp` directory storage: 512 MB
 - environment variables: any number, up to 4KB in total size
+- max. execution time: 15 minutes
 
 ### Debugging
 
@@ -986,7 +993,6 @@ https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/s
 
 ## AWS Step Functions
 
-
 AWS Step Functions is a web service that enables you to coordinate the components of distributed applications and microservices using visual workflows. You build applications from individual components that each perform a discrete function, or task, allowing you to scale and change applications quickly.
 
 ### Large payloads
@@ -996,7 +1002,7 @@ Executions that pass large payloads of data between states can be terminated. If
 
 ## AWS Secrets Manager
 
-AWS Secrets Manager helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. Secrets Manager offers secret rotation with built-in integration for Amazon RDS, Amazon Redshift, and Amazon DocumentDB
+AWS Secrets Manager helps you protect secrets needed to access your applications, services, and IT resources. The service enables you to easily rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their lifecycle. Users and applications retrieve secrets with a call to Secrets Manager APIs, eliminating the need to hardcode sensitive information in plain text. Secrets Manager offers **secret rotation** with built-in integration for Amazon RDS, Amazon Redshift, and Amazon DocumentDB
 
 ### Secret rotation
 
@@ -1262,3 +1268,6 @@ Using AWS CodePipeline and AWS CloudFormation, you can use continuous delivery t
 
 AWS CodePipeline integrates with AWS services such as AWS CodeCommit, Amazon S3, AWS CodeBuild, AWS CodeDeploy, AWS Elastic Beanstalk, AWS CloudFormation, AWS OpsWorks, Amazon ECS, and AWS Lambda. In addition, AWS CodePipeline integrates with a number of partner tools.
 
+### Manual approval
+
+You can add an approval action to a stage in a CodePipeline pipeline at the point where you want the pipeline to stop so someone can manually approve or reject the action.
