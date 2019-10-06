@@ -706,6 +706,8 @@ A local secondary index maintains an alternate sort key for a given partition ke
 
 A local secondary index lets you query over a single partition, as specified by the hash key value in the query. A **global secondary** index lets you query over the entire table, across all partitions.
 
+> Note: you cannot add a local secondary index to an already existing table.
+
 #### Global secondary index 
 
 An index with a partition key and a sort key that can be different from those on the base table. A global secondary index is considered "global" because queries on the index can span all of the data in the base table, across all partitions. A global secondary index has no size limitations and has its own provisioned throughput settings for read and write activity that are separate from those of the table.
@@ -713,6 +715,9 @@ An index with a partition key and a sort key that can be different from those on
 To speed up queries on non-key attributes, you can create a global secondary index. A global secondary index contains a selection of attributes from the base table, but they are organized by a primary key that is different from that of the table. The index key does not need to have any of the key attributes from the table. It doesn't even need to have the same key schema as a table.
 
 Every global secondary index must have a partition key, and can have an optional sort key. The index key schema can be different from the base table schema. You could have a table with a simple primary key (partition key), and create a global secondary index with a composite primary key (partition key and sort key)—or vice versa. 
+
+- Queries or scans on this index consume capacity units from the index, not from the base table.
+- Queries on this index support **eventual consistency only**.
 
 ### Read Request Units and Write Request Units
 
