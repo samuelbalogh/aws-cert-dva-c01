@@ -460,7 +460,7 @@ Amazon S3 automatically scales to high request rates. For example, your applicat
 
 ### Consistency
 
-Amazon S3 provides read-after-write consistency for PUTS of new objects in your S3 bucket in all Regions with one caveat. The caveat is that if you make a HEAD or GET request to the key name (to find if the object exists) before creating the object, Amazon S3 provides eventual consistency for read-after-write.
+Amazon S3 provides **read-after-write consistency** for PUTS of new objects in your S3 bucket in all Regions with one caveat. The caveat is that if you make a HEAD or GET request to the key name (to find if the object exists) before creating the object, Amazon S3 provides eventual consistency for read-after-write.
 
 Amazon S3 offers eventual consistency for overwrite PUTS and DELETES in all Regions.
 
@@ -472,6 +472,7 @@ Amazon S3 achieves high availability by replicating data across multiple servers
 - A process replaces an existing object and immediately tries to read it. Until the change is fully propagated, Amazon S3 might return the previous data.
 - A process deletes an existing object and immediately tries to read it. Until the deletion is fully propagated, Amazon S3 might return the deleted data.
 - A process deletes an existing object and immediately lists keys within its bucket. Until the deletion is fully propagated, Amazon S3 might list the deleted object.
+
 
 ### Requiring HTTPS for Communication Between CloudFront and Your Amazon S3 Origin
 
@@ -496,7 +497,7 @@ Cross-region replication can help you do the following:
 
 By default, all Amazon S3 resources—buckets, objects, and related subresources (for example, lifecycle configuration and website configuration)—are private: only the resource owner, an AWS account that created it, can access the resource. The resource owner can optionally grant access permissions to others by writing an access policy.
 
-Amazon S3 offers access policy options broadly categorized as resource-based policies and user policies. Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies. For example, bucket policies and access control lists (ACLs) are resource-based policies. You can also attach access policies to users in your account. These are called user policies. You may choose to use resource-based policies, user policies, or some combination of these to manage permissions to your Amazon S3 resources. 
+Amazon S3 offers access policy options broadly categorized as **resource-based policies** and **user policies**. Access policies you attach to your resources (buckets and objects) are referred to as resource-based policies. For example, bucket policies and access control lists (ACLs) are resource-based policies. You can also attach access policies to users in your account. These are called user policies. You may choose to use resource-based policies, user policies, or some combination of these to manage permissions to your Amazon S3 resources. 
 
 Bucket policy and user policy are two of the access policy options available for you to grant permission to your Amazon S3 resources. Both use JSON-based access policy language.
 
@@ -531,7 +532,6 @@ Define when objects expire. Amazon S3 deletes expired objects on your behalf.
 The lifecycle expiration costs depend on when you choose to expire objects. 
 
 
-
 #### When Should I Use Lifecycle Configuration?
 
 Define lifecycle configuration rules for objects that have a well-defined lifecycle. For example:
@@ -550,11 +550,9 @@ A lifecycle configuration, an XML file, comprises a set of rules with predefined
 
 Amazon S3 provides a set of API operations for managing lifecycle configuration on a bucket. Amazon S3 stores the configuration as a lifecycle subresource that is attached to your bucket. For details, see the following:
 
-PUT Bucket lifecycle
-
-GET Bucket lifecycle
-
-DELETE Bucket lifecycle
+- `PUT` Bucket lifecycle
+- `GET` Bucket lifecycle
+- `DELETE` Bucket lifecycle
 
 You can also configure the lifecycle by using the Amazon S3 console or programmatically by using the AWS SDK wrapper libraries. If you need to, you can also make the REST API calls directly. 
 
@@ -587,11 +585,14 @@ You might want to use Transfer Acceleration on a bucket for various reasons, inc
 When using server-side encryption with customer-provided encryption keys (SSE-C), you must provide encryption key information using the following request headers.
 
 - `x-amz-server-side-encryption-customer-algorithm` - Use this header to specify the encryption algorithm. The header value must be "AES256".
-
 - `x-amz-server-side-encryption-customer-key` - Use this header to provide the 256-bit, base64-encoded encryption key for Amazon S3 to use to encrypt or decrypt your data.
-
 - `x-amz-server-side-encryption-customer-key-MD5` - Use this header to provide the base64-encoded 128-bit MD5 digest of the encryption key according to RFC 1321. Amazon S3 uses this header for a message integrity check to ensure that the encryption key was transmitted without error.
 
+### S3 limitations
+
+- Up to 100 buckets per account
+- Storage capacity is virtually unlimited
+- Can't change a bucket's region after creation
 
 ## AWS Cognito 
 
