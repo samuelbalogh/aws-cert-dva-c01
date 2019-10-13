@@ -104,6 +104,48 @@ With parameters, you can customize aspects of your template at run time, when th
 
 Output values are a very convenient way to present a stack’s key resources (such as the address of an Elastic Load Balancing load balancer or Amazon RDS database) to the user via the AWS Management Console, or the command line tools. You can use simple functions to concatenate string literals and value of attributes associated with the actual AWS resources.
 
+The following example shows a YAML-formatted template fragment.
+
+```
+---
+AWSTemplateFormatVersion: "version date"  # optional - The AWS CloudFormation template version that the template conforms to.
+
+Description:
+  String  # optional - A text string that describes the template
+
+Metadata:
+  template metadata  # optional - Objects that provide additional information about the template.
+
+Parameters:
+  set of parameters
+  # Values to pass to your template at runtime (when you create or update a stack).
+  # You can refer to parameters from the Resources and Outputs sections of the template.
+
+Mappings:
+  set of mappings
+  # A mapping of keys and associated values
+  # that you can use to specify conditional parameter values, similar to a lookup table.
+  # You can match a key to a corresponding value 
+  # by using the Fn::FindInMap intrinsic function in the Resources and Outputs sections.
+
+Conditions:
+  set of conditions
+  # Conditions that control whether certain resources are created 
+  # or whether certain resource properties are assigned a value during stack creation or update.
+
+Transform:
+  set of transforms
+
+Resources:
+  set of resources - required
+  # Specifies the stack resources and their properties, 
+  # such as an Amazon Elastic Compute Cloud instance or an Amazon Simple Storage Service bucket. 
+  # You can refer to resources in the Resources and Outputs sections of the template.
+
+Outputs:
+  set of outputs
+```
+
 ### Functions
 
 AWS CloudFormation provides several built-in functions that help you manage your stacks. Use intrinsic functions in your templates to assign values to properties that are not available until runtime.
@@ -115,6 +157,11 @@ AWS CloudFormation provides several built-in functions that help you manage your
 - `Fn::Join` - appends a set of values into a single value, separated by the specified delimiter.
 - `Fn::Sub` - substitutes variables in an input string with values that you specify. In your templates, you can use this function to construct commands or outputs that include values that aren't available until you create or update a stack.
 - Condition Functions (`Fn::If`, `Fn::Not`, `Fn::Equals`, etc.)
+- `Fn::Transform`
+
+### Transform
+
+The optional `Transform` section specifies one or more macros that AWS CloudFormation uses to process your template. The Transform section builds on the simple, declarative language of AWS CloudFormation with a powerful macro system.
 
 ### Stacksets
 
@@ -1063,9 +1110,9 @@ aws lambda create-alias --name alias name --function-name function-name \ --func
 
 ### Handle Lambda Service Exceptions
 
-AWS Lambda can occasionally experience transient service errors. In this case, invoking Lambda will result in a 500 error such as ServiceException, AWSLambdaException, or SdkClientException. As a best practice, proactively handle these exceptions in your state machine to Retry invoking your Lambda function, or to Catch the error.
+AWS Lambda can occasionally experience transient service errors. In this case, invoking Lambda will result in a `500` error such as `ServiceException`, `AWSLambdaException`, or `SdkClientException`. As a best practice, proactively handle these exceptions in your state machine to `Retry` invoking your Lambda function, or to `Catch` the error.
 
-Lambda errors are reported as Lambda.ErrorName. To retry a Lambda service exception error, you could use the following Retry code.
+Lambda errors are reported as `Lambda.ErrorName`. To retry a Lambda service exception error, you could use the following Retry code.
 
 "Retry": [ {
    "ErrorEquals": [ "Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException"],
@@ -1073,6 +1120,13 @@ Lambda errors are reported as Lambda.ErrorName. To retry a Lambda service except
    "MaxAttempts": 6,
    "BackoffRate": 2
 } ]
+
+Some exception types:
+
+- The `InvalidParameterValueException` will be returned if one of the parameters in the request is invalid. For example, if you provided an IAM role in the `CreateFunction` API which AWS Lambda is unable to assume.
+- If you have exceeded your maximum total code size per account, the `CodeStorageExceededException` will be returned, which is why this option is incorrect.
+- If the resource already exists, the `ResourceConflictException` will be returned.
+- If the AWS Lambda service encountered an internal error, the `ServiceException` will be returned.
 
 ### Lambda@Edge
 
