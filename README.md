@@ -5,6 +5,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 <!-- vim-markdown-toc GFM -->
 
 * [AWS IAM](#aws-iam)
+* [AWS Security Groups](#aws-security-groups)
 * [AWS Cloudformation](#aws-cloudformation)
 * [Elastic Beanstalk](#elastic-beanstalk)
 * [AWS ECS](#aws-ecs)
@@ -36,6 +37,7 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [AWS SQS](#aws-sqs)
 * [AWS SNS](#aws-sns)
 * [AWS CloudWatch](#aws-cloudwatch)
+* [AWS CodeCommit](#aws-codecommit)
 * [AWS CodePipeline](#aws-codepipeline)
 
 <!-- vim-markdown-toc -->
@@ -67,6 +69,25 @@ You manage access in AWS by **creating policies and attaching them to IAM identi
 ### Temporary credentials
 
 Temporary credentials are primarily used with IAM roles, but there are also other uses. You can request temporary credentials that have a more restricted set of permissions than your standard IAM user. This prevents you from accidentally performing tasks that are not permitted by the more restricted credentials.
+
+## AWS Security Groups
+
+A security group acts as a virtual firewall that controls the traffic for one or more instances. When you launch an instance, you can specify one or more security groups; otherwise, we use the default security group. You can add rules to each security group that allow traffic to or from its associated instances. 
+
+- By default, security groups allow all outbound traffic.
+- Security group rules are always permissive; you can't create rules that deny access.
+- Security groups are stateful — if you send a request from your instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules
+- You can add and remove rules at any time. Your changes are automatically applied to the instances associated with the security group.
+
+> Note: if your application is not accessible (it times out), it might be because of a security group issue.
+
+For each rule, you specify the following:
+
+- Protocol: The protocol to allow. The most common protocols are 6 (TCP) 17 (UDP), and 1 (ICMP).
+- Port range : For TCP, UDP, or a custom protocol, the range of ports to allow. You can specify a single port number (for example, 22), or range of port numbers (for example, 7000-8000).
+- ICMP type and code: For ICMP, the ICMP type and code.
+- Source or destination: The source (inbound rules) or destination (outbound rules) for the traffic. Specify one of these options:
+- (Optional) Description
 
 ## AWS Cloudformation
 
@@ -371,7 +392,10 @@ An Elastic IP address is a public IPv4 address, which is reachable from the inte
 - When you associate an Elastic IP address with an instance that previously had a public IPv4 address, the public DNS hostname of the instance changes to match the Elastic IP address.
 - We resolve a public DNS hostname to the public IPv4 address or the Elastic IP address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance.
 - To ensure efficient use of Elastic IP addresses, we impose a small hourly charge if an Elastic IP address is not associated with a running instance, or if it is associated with a stopped instance or an unattached network interface. While your instance is running, you are not charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance.
-
+- You can only have 5 Elastic IP in your account (you can ask AWS to increase that).
+- Overall, try to avoid using Elastic IP:
+  - They often reflect poor architectural decisions
+  - Instead, use a random public IP and register a DNS name to it
 
 ## AWS EBS
 
@@ -435,7 +459,7 @@ You can use the following automated monitoring tools to watch Amazon RDS and rep
 
 **Database log files** – View, download, or watch database log files using the Amazon RDS console or Amazon RDS API operations. You can also query some database log files that are loaded into database tables. 
 
-**Amazon RDS Enhanced Monitoring** — Look at metrics in real time for the operating system. 
+**Amazon RDS Enhanced Monitoring** — Look at metrics in real time for the operating system. Enhanced Monitoring metrics are useful when you want to see how different processes or threads on a DB instance use the CPU.
 
 In addition, Amazon RDS integrates with Amazon CloudWatch for additional monitoring capabilities:
 
@@ -1212,7 +1236,9 @@ AWS X-Ray helps developers analyze and debug production, distributed application
 
 X-Ray provides a user-centric model, instead of service-centric or resource-centric model, for collecting data related to requests made to your application. This model enables you to create a user-centric picture of requests as they travel across services and resources.
 
-On supported platforms, you can use a configuration option to run the X-Ray daemon on the instances in your environment. You can enable the daemon in the Elastic Beanstalk console or by using a configuration file. To upload data to X-Ray, the X-Ray daemon requires IAM permissions in the AWSXrayWriteOnlyAccess managed policy.
+On supported platforms, you can use a configuration option to run the X-Ray daemon on the instances in your environment. You can enable the daemon in the Elastic Beanstalk console or by using a configuration file. To upload data to X-Ray, the X-Ray daemon requires IAM permissions in the `AWSXrayWriteOnlyAccess` managed policy.
+
+To properly instrument your application hosted in an EC2 instance, you have to install the X-Ray daemon by using a **user data script**. 
 
 ### Definitions
 
@@ -1435,6 +1461,11 @@ Each metric is one of the following:
 - **Standard resolution**, with data having a one-minute granularity
 - **High resolution**, with data at a granularity of one second
 
+## AWS CodeCommit
+
+### Notifications
+
+You can trigger notifications in CodeCommit using AWS SNS or AWS Lambda or AWS CloudWatch Event Rules
 
 ## AWS CodePipeline
 
@@ -1442,7 +1473,6 @@ Each metric is one of the following:
 ### What is AWS CodePipeline?
 
 AWS CodePipeline is a continuous delivery service that enables you to model, visualize, and automate the steps required to release your software. With AWS CodePipeline, you model the full release process for building your code, deploying to pre-production environments, testing your application and releasing it to production. AWS CodePipeline then builds, tests, and deploys your application according to the defined workflow every time there is a code change. 
-
 
 ### What is a pipeline?
 
@@ -1464,3 +1494,11 @@ AWS CodePipeline integrates with AWS services such as AWS CodeCommit, Amazon S3,
 ### Manual approval
 
 You can add an approval action to a stage in a CodePipeline pipeline at the point where you want the pipeline to stop so someone can manually approve or reject the action.
+
+### Artifacts
+
+CodePipeline integrates with development tools to check for code changes and then build and deploy through all stages of the continuous delivery process.
+
+Stages use input and output artifacts that are stored in the artifact store for your pipeline. An artifact store is an Amazon S3 bucket.
+
+![artifacts](img/codepipeline-artifacts.png)
