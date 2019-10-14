@@ -171,6 +171,16 @@ AWS CloudFormation StackSets extends the functionality of stacks by enabling you
 
 [Link to AWS](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html)
 
+### Create an Application Source Bundle
+
+When you use the AWS Elastic Beanstalk console to deploy a new application or an application version, you'll need to upload a source bundle. Your source bundle must meet the following requirements:
+
+- Consist of a single ZIP file or WAR file (you can include multiple WAR files inside your ZIP file)
+- Not exceed 512 MB
+- Not include a parent folder or top-level directory (subdirectories are fine)
+
+If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a `cron.yaml` file.
+
 ### Config files
 
 You can add AWS Elastic Beanstalk configuration files (`.ebextensions`) to your web application's source code to configure your environment and customize the AWS resources that it contains. Configuration files are YAML- or JSON-formatted documents with a `.config` file extension that you place in a folder named .ebextensions and deploy in your application source bundle.
@@ -816,6 +826,8 @@ In a table that has only a partition key, no two items can have the same partiti
 
 You can create one or more secondary indexes on a table. A secondary index lets you query the data in the table using an alternate key, in addition to queries against the primary key.
 
+In general, you should use global secondary indexes rather than local secondary indexes. The exception is when you need strong consistency in your query results, which a local secondary index can provide but a global secondary index cannot (global secondary index queries only support eventual consistency).
+
 #### Local seconday indexes
 
 To give your application a choice of sort keys, you can create one or more local secondary indexes on an Amazon DynamoDB table and issue Query or Scan requests against these indexes.
@@ -1060,6 +1072,7 @@ In the Invoke API, you have 3 options to choose from for the InvocationType:
 ### Misc
 
 - Default timeout: 3s
+- Max. timeout: 900 s (15 minutes)
 - CPU is allocated in proportion to the configured memory. 
 - Separate the Lambda handler from your core logic. This allows you to make a more unit-testable function. 
 - Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
@@ -1139,6 +1152,10 @@ Lambda@Edge runs your code globally at AWS locations close to your users, so you
 
 ### AWS SAM 
 
+The AWS Serverless Application Model (AWS SAM) is an open-source framework that you can use to build serverless applications on AWS. It consists of the AWS SAM template specification that you use to define your serverless applications, and the AWS SAM command line interface (AWS SAM CLI) that you use to build, test, and deploy your serverless applications.
+
+You can use AWS SAM with a suite of AWS tools for building serverless applications. The AWS SAM CLI lets you locally build, test, and debug serverless applications that are defined by AWS SAM templates. The CLI provides a Lambda-like execution environment locally. It helps you catch issues upfront by providing parity with the actual Lambda execution environment
+
 When you create a serverless application by using AWS SAM, your main objective is to construct an AWS SAM template file that represents the architecture of your serverless application.
 
 The AWS SAM template file is a YAML or JSON configuration file that adheres to the open source AWS Serverless Application Model specification. You use the template to declare all of the AWS resources that comprise your serverless application.
@@ -1191,6 +1208,8 @@ An activity is an action that AWS Data Pipeline initiates on your behalf as part
 AWS X-Ray helps developers analyze and debug production, distributed applications, such as those built using a microservices architecture. With X-Ray, you can understand how your application and its underlying services are performing to identify and troubleshoot the root cause of performance issues and errors. X-Ray provides an end-to-end view of requests as they travel through your application, and shows a map of your application’s underlying components.
 
 X-Ray provides a user-centric model, instead of service-centric or resource-centric model, for collecting data related to requests made to your application. This model enables you to create a user-centric picture of requests as they travel across services and resources.
+
+On supported platforms, you can use a configuration option to run the X-Ray daemon on the instances in your environment. You can enable the daemon in the Elastic Beanstalk console or by using a configuration file. To upload data to X-Ray, the X-Ray daemon requires IAM permissions in the AWSXrayWriteOnlyAccess managed policy.
 
 ### Definitions
 
