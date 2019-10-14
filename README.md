@@ -1162,6 +1162,9 @@ The AWS SAM template file is a YAML or JSON configuration file that adheres to t
 
 AWS SAM templates are an extension of AWS CloudFormation templates. That is, any resource that you can declare in an AWS CloudFormation template you can also declare in an AWS SAM template.
 
+After you develop and test your serverless application locally, you can deploy your application by using the `sam package` and `sam deploy` commands.
+Take note that both the `sam package` and `sam deploy` commands are identical to their AWS CLI equivalent commands which are `aws cloudformation package` and `aws cloudformation deploy`, respectively.
+
 #### AWS SAM Template Concepts
 
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
