@@ -10,7 +10,6 @@ A braindump for the AWS Developer Associate exam. Not exhaustive, but avoids non
 * [Elastic Beanstalk](#elastic-beanstalk)
 * [AWS ECS](#aws-ecs)
 * [AWS ECR](#aws-ecr)
-* [X-Ray on ECS](#x-ray-on-ecs)
 * [AWS EC2](#aws-ec2)
 * [VPC](#vpc)
 * [AWS DNS](#aws-dns)
@@ -257,15 +256,25 @@ Amazon ECS supports the following task placement strategies:
 - `random` - Place tasks randomly.
 - `spread` - Place tasks evenly based on the specified value. Accepted values are instanceId (or host, which has the same effect), or any platform or custom attribute that is applied to a container instance, such as attribute:ecs.availability-zone. Service tasks are spread based on the tasks from that service. Standalone tasks are spread based on the tasks from the same task group.
 
-## AWS ECR
-
-Amazon Elastic Container Registry (Amazon ECR) is a managed AWS Docker registry service that is secure, scalable, and reliable. Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that specific users or Amazon EC2 instances can access repositories and images. Developers can use the Docker CLI to push, pull, and manage images.
-
-## X-Ray on ECS
+###  X-Ray on ECS
 
 ### Running the X-Ray daemon on Amazon ECS
 
 In Amazon ECS, create a Docker image that runs the X-Ray daemon, upload it to a Docker image repository, and then deploy it to your Amazon ECS cluster. You can use port mappings and network mode settings in your task definition file to allow your application to communicate with the daemon container.
+
+## AWS ECR
+
+Amazon Elastic Container Registry (Amazon ECR) is a managed AWS Docker registry service that is secure, scalable, and reliable. Amazon ECR supports private Docker repositories with resource-based permissions using AWS IAM so that specific users or Amazon EC2 instances can access repositories and images. Developers can use the Docker CLI to push, pull, and manage images.
+
+### Logging into a registry
+
+`aws ecr get-login`
+
+Output: 
+
+`docker login -u AWS -p <password> -e none https://<aws_account_id>.dkr.ecr.<region>.amazonaws.com`
+
+This command retrieves a token that is valid for a specified registry for 12 hours, and then it prints a docker login command with that authorization token. You can execute the printed command to log in to your registry with Docker. After you have logged in to an Amazon ECR registry with this command, you can use the Docker CLI to push and pull images from that registry until the token expires.
 
 ## AWS EC2
 
@@ -1055,8 +1064,10 @@ Generates a unique data key. This operation returns a data key that is encrypted
 
 Creating a Deployment Package
 
-To create a Lambda function you first create a Lambda function deployment package, a .zip or .jar file consisting of your code and any dependencies. When creating the zip, include only the code and its dependencies, not the containing folder. You will then need to set the appropriate security permissions for the zip package.
+To create a Lambda function you first create a Lambda function deployment package, a `.zip` or `.jar` file consisting of your code and any dependencies. When creating the zip, include only the code and its dependencies, not the containing folder. You will then need to set the appropriate security permissions for the zip package.
 You can upload the package directly to Lambda, or you can use an Amazon S3 bucket, and then upload it to Lambda. If the deployment package is larger than 50 MB, you must use Amazon S3.
+
+> Note: though there is a `update-function-code` CLI command to change an unpublished Lambda code, the function's code is locked when you publish a version. You can't modify the code of a published version, only the unpublished version.
 
 ### Layers
 
